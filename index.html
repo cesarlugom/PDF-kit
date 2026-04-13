@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PDF Kit — Haven Tech</title>
+<meta name="description" content="Edit, merge, split, organize, compress, and print PDFs. One-time purchase. No subscription. Nothing leaves your PC.">
+<meta name="keywords" content="PDF editor, merge PDF, split PDF, compress PDF, batch print, Windows, Microsoft Store, Haven Tech">
+<link rel="icon" type="image/png" href="favicon.png">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+  --orange: #E3962C;
+  --orange-light: #F0A83C;
+  --orange-glow: rgba(227, 150, 44, 0.15);
+  --orange-glow-strong: rgba(227, 150, 44, 0.3);
+  --bg-dark: #0D0D0D;
+  --bg-card: #1A1A1A;
+  --bg-card-hover: #222222;
+  --text-primary: #F5F5F5;
+  --text-secondary: #A0A0A0;
+  --text-muted: #666666;
+  --border: #2A2A2A;
+  --font-body: 'DM Sans', -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg-dark);
+  color: var(--text-primary);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* Language toggle */
+.lang-en, .lang-es { display: none; }
+body.en .lang-en { display: block; }
+body.es .lang-es { display: block; }
+body.en span.lang-en, body.es span.lang-es { display: inline; }
+body.en a.lang-en, body.es a.lang-es { display: inline-flex; }
+body.en .lang-en.grid-features { display: grid; }
+body.es .lang-es.grid-features { display: grid; }
+body.en .lang-en.flex-row, body.es .lang-es.flex-row { display: flex; }
+body.en .lang-en.steps-grid, body.es .lang-es.steps-grid { display: grid; }
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(13,13,13,0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 2rem;
+  height: 64px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+
+.nav-brand { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; }
+.nav-brand img { width: 36px; height: 36px; border-radius: 8px; }
+.nav-brand span { font-weight: 700; font-size: 1.1rem; color: var(--text-primary); }
+
+.nav-links { display: flex; align-items: center; gap: 2rem; }
+.nav-links a {
+  color: var(--text-secondary); text-decoration: none;
+  font-size: 0.9rem; font-weight: 500;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--orange-light); }
+
+.lang-switch {
+  display: flex; gap: 0.25rem; background: var(--bg-card);
+  border-radius: 6px; padding: 2px; border: 1px solid var(--border);
+}
+.lang-switch button {
+  background: none; border: none; color: var(--text-muted);
+  padding: 4px 10px; border-radius: 4px; font-size: 0.8rem;
+  font-weight: 600; cursor: pointer; font-family: var(--font-body);
+  transition: all 0.2s;
+}
+.lang-switch button.active {
+  background: var(--orange);
+  color: var(--bg-dark);
+}
+
+/* HERO */
+.hero {
+  min-height: 100vh; padding: 120px 2rem 80px;
+  display: flex; flex-direction: column; align-items: center;
+  text-align: center;
+  background: radial-gradient(ellipse at 50% 0%, var(--orange-glow) 0%, transparent 60%);
+}
+
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 100px; padding: 6px 16px;
+  font-size: 0.8rem; color: var(--text-secondary);
+  margin-bottom: 2rem;
+  animation: fadeUp 0.6s ease-out;
+}
+.hero-badge .dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: #22C55E; animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.hero h1 {
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 700; line-height: 1.1;
+  max-width: 800px; margin-bottom: 1.5rem;
+  animation: fadeUp 0.6s ease-out 0.1s both;
+}
+.hero h1 .accent { color: var(--orange); }
+
+.hero-sub {
+  font-size: 1.2rem; color: var(--text-secondary);
+  max-width: 600px; margin-bottom: 2.5rem;
+  animation: fadeUp 0.6s ease-out 0.2s both;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.hero-buttons {
+  display: flex; gap: 1rem; margin-bottom: 1rem;
+  animation: fadeUp 0.6s ease-out 0.3s both;
+}
+
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  background: var(--orange); color: var(--bg-dark);
+  padding: 14px 28px; border-radius: 10px;
+  font-weight: 700; font-size: 1rem; text-decoration: none;
+  transition: all 0.2s; font-family: var(--font-body);
+  border: none; cursor: pointer;
+}
+.btn-primary:hover {
+  background: var(--orange-light);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px var(--orange-glow-strong);
+}
+
+.btn-secondary {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  background: transparent; color: var(--text-primary);
+  padding: 14px 28px; border-radius: 10px;
+  font-weight: 600; font-size: 1rem; text-decoration: none;
+  border: 1px solid var(--border); transition: all 0.2s;
+}
+.btn-secondary:hover {
+  border-color: var(--orange);
+  background: var(--orange-glow);
+}
+
+.hero-meta {
+  font-size: 0.85rem; color: var(--text-muted);
+  animation: fadeUp 0.6s ease-out 0.4s both;
+}
+
+/* SCREENSHOT */
+.hero-screenshot {
+  margin-top: 3rem; max-width: 1000px; width: 100%;
+  animation: fadeUp 0.8s ease-out 0.5s both;
+}
+.hero-screenshot img {
+  width: 100%; border-radius: 12px;
+  border: 1px solid var(--border);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5),
+              0 0 80px var(--orange-glow);
+}
+
+/* SECTIONS */
+section { padding: 100px 2rem; }
+
+.section-header {
+  text-align: center; max-width: 700px;
+  margin: 0 auto 4rem;
+}
+.section-header h2 {
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 700; margin-bottom: 1rem;
+}
+.section-header p {
+  color: var(--text-secondary); font-size: 1.1rem;
+}
+
+/* FEATURES GRID */
+.grid-features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem; max-width: 1100px; margin: 0 auto;
+}
+
+.feature-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px; padding: 2rem;
+  transition: all 0.3s;
+}
+.feature-card:hover {
+  border-color: var(--orange);
+  background: var(--bg-card-hover);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+}
+.feature-card .icon {
+  font-size: 2rem; margin-bottom: 1rem;
+  display: block;
+}
+.feature-card h3 {
+  font-size: 1.15rem; font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+.feature-card p {
+  color: var(--text-secondary); font-size: 0.95rem;
+}
+
+/* SCREENSHOTS SECTION */
+.screenshots {
+  max-width: 1100px; margin: 0 auto;
+  display: flex; flex-direction: column; gap: 4rem;
+}
+
+.screenshot-row {
+  display: flex; align-items: center; gap: 3rem;
+}
+.screenshot-row.reverse { flex-direction: row-reverse; }
+
+.screenshot-row img {
+  flex: 1; max-width: 60%; border-radius: 12px;
+  border: 1px solid var(--border);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+}
+.screenshot-text { flex: 1; }
+.screenshot-text h3 {
+  font-size: 1.5rem; font-weight: 700; margin-bottom: 0.75rem;
+}
+.screenshot-text p {
+  color: var(--text-secondary); font-size: 1rem;
+}
+
+/* PRIVACY BANNER */
+.privacy-banner {
+  max-width: 900px; margin: 0 auto;
+  background: linear-gradient(135deg, var(--bg-card) 0%, rgba(227,150,44,0.08) 100%);
+  border: 1px solid var(--border);
+  border-radius: 16px; padding: 3rem;
+  text-align: center;
+}
+.privacy-banner h2 {
+  font-size: 1.8rem; font-weight: 700; margin-bottom: 1rem;
+}
+.privacy-banner p {
+  color: var(--text-secondary); font-size: 1.05rem;
+  max-width: 650px; margin: 0 auto 2rem;
+}
+.privacy-tags {
+  display: flex; justify-content: center; gap: 1rem;
+  flex-wrap: wrap;
+}
+.privacy-tags span {
+  background: var(--bg-dark); border: 1px solid var(--border);
+  border-radius: 100px; padding: 8px 18px;
+  font-size: 0.85rem; color: var(--text-secondary);
+}
+
+/* PRICING */
+.pricing-grid {
+  display: grid; grid-template-columns: 1fr;
+  max-width: 480px; margin: 0 auto;
+}
+.price-card {
+  background: var(--bg-card);
+  border: 2px solid var(--orange);
+  border-radius: 16px; padding: 2.5rem;
+  text-align: center;
+  box-shadow: 0 0 60px var(--orange-glow);
+}
+.price-card .price {
+  font-size: 1rem; color: var(--text-secondary);
+  margin-bottom: 0.5rem;
+}
+.price-card .price-note {
+  font-size: 0.9rem; color: var(--text-muted);
+  margin-bottom: 1.5rem;
+}
+.price-card h3 {
+  font-size: 1.5rem; font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+.price-card ul {
+  list-style: none; text-align: left;
+  margin-bottom: 2rem;
+}
+.price-card ul li {
+  padding: 0.5rem 0; color: var(--text-secondary);
+  font-size: 0.95rem; border-bottom: 1px solid var(--border);
+}
+.price-card ul li::before {
+  content: "✓ "; color: var(--orange); font-weight: 700;
+}
+
+/* FAQ */
+.faq-list {
+  max-width: 700px; margin: 0 auto;
+}
+.faq-item {
+  border-bottom: 1px solid var(--border);
+  padding: 1.5rem 0;
+}
+.faq-q {
+  font-weight: 600; font-size: 1.05rem; cursor: pointer;
+  display: flex; justify-content: space-between;
+  align-items: center;
+}
+.faq-q::after { content: "+"; font-size: 1.5rem; color: var(--orange); transition: transform 0.2s; }
+.faq-item.open .faq-q::after { transform: rotate(45deg); }
+.faq-a {
+  color: var(--text-secondary); font-size: 0.95rem;
+  max-height: 0; overflow: hidden; transition: max-height 0.3s;
+  padding-top: 0;
+}
+.faq-item.open .faq-a { max-height: 200px; padding-top: 1rem; }
+
+/* CTA */
+.cta-section {
+  text-align: center; padding: 100px 2rem;
+  background: radial-gradient(ellipse at 50% 100%, var(--orange-glow) 0%, transparent 60%);
+}
+.cta-section h2 {
+  font-size: 2.2rem; font-weight: 700; margin-bottom: 1rem;
+}
+.cta-section p {
+  color: var(--text-secondary); margin-bottom: 2rem;
+  font-size: 1.1rem;
+}
+
+/* FOOTER */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 2rem; text-align: center;
+  color: var(--text-muted); font-size: 0.85rem;
+}
+footer a {
+  color: var(--text-secondary); text-decoration: none;
+  margin: 0 1rem;
+}
+footer a:hover { color: var(--orange); }
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .screenshot-row, .screenshot-row.reverse {
+    flex-direction: column;
+  }
+  .screenshot-row img { max-width: 100%; }
+  .nav-links { display: none; }
+  .hero-buttons { flex-direction: column; }
+}
+</style>
+</head>
+<body class="en">
+
+<!-- NAV -->
+<nav>
+  <a class="nav-brand" href="#">
+    <img src="pdfkit-logo.png" alt="PDF Kit">
+    <span>PDF Kit</span>
+  </a>
+  <div class="nav-links">
+    <a href="#features" class="lang-en">Features</a>
+    <a href="#features" class="lang-es">Funciones</a>
+    <a href="#showcase" class="lang-en">Screenshots</a>
+    <a href="#showcase" class="lang-es">Capturas</a>
+    <a href="#pricing" class="lang-en">Pricing</a>
+    <a href="#pricing" class="lang-es">Precio</a>
+    <a href="https://cesarlugom.github.io/haven-software-legal/" class="lang-en">Privacy</a>
+    <a href="https://cesarlugom.github.io/haven-software-legal/" class="lang-es">Privacidad</a>
+    <div class="lang-switch">
+      <button onclick="setLang('en')" id="btn-en" class="active">EN</button>
+      <button onclick="setLang('es')" id="btn-es">ES</button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">
+    <span class="dot"></span>
+    <span class="lang-en">Live on Microsoft Store</span>
+    <span class="lang-es">Disponible en Microsoft Store</span>
+  </div>
+
+  <h1 class="lang-en">Stop paying monthly<br>for <span class="accent">PDFs.</span></h1>
+  <h1 class="lang-es">Deja de pagar mensual<br>por tus <span class="accent">PDFs.</span></h1>
+
+  <p class="hero-sub lang-en">
+    Merge, split, organize, compress, highlight, print, and add text to any PDF. 
+    One-time purchase. Every feature included. Your files never leave your PC.
+  </p>
+  <p class="hero-sub lang-es">
+    Une, divide, organiza, comprime, resalta, imprime y agrega texto a cualquier PDF. 
+    Pago único. Todas las funciones incluidas. Tus archivos nunca salen de tu PC.
+  </p>
+
+  <div class="hero-buttons">
+    <a href="https://apps.microsoft.com/detail/9P9R7V8C5BMZ" class="btn-primary lang-en">
+      Get PDF Kit — Microsoft Store
+    </a>
+    <a href="https://apps.microsoft.com/detail/9P9R7V8C5BMZ" class="btn-primary lang-es">
+      Obtener PDF Kit — Microsoft Store
+    </a>
+    <a href="#features" class="btn-secondary lang-en">See features ↓</a>
+    <a href="#features" class="btn-secondary lang-es">Ver funciones ↓</a>
+  </div>
+
+  <p class="hero-meta">
+    <span class="lang-en">Nothing leaves your PC · No account · No subscription · 30 languages</span>
+    <span class="lang-es">Nada sale de tu PC · Sin cuenta · Sin suscripción · 30 idiomas</span>
+  </p>
+
+  <div class="hero-screenshot">
+    <img src="Pantalla home.png" alt="PDF Kit home screen">
+  </div>
+</section>
+
+<!-- WHAT YOU CAN DO -->
+<section id="features">
+  <div class="section-header">
+    <h2 class="lang-en">Everything you need. Nothing you don't.</h2>
+    <h2 class="lang-es">Todo lo que necesitas. Nada que no.</h2>
+    <p class="lang-en">The tools that matter, built for speed and privacy.</p>
+    <p class="lang-es">Las herramientas que importan, hechas para velocidad y privacidad.</p>
+  </div>
+
+  <div class="grid-features lang-en">
+    <div class="feature-card"><span class="icon">📄</span><h3>View PDFs</h3><p>Smooth scrolling, zoom, text search, and keyboard shortcuts. Rendered with the same engine behind the world's most popular browser.</p></div>
+    <div class="feature-card"><span class="icon">🔗</span><h3>Merge Files & Images</h3><p>Combine PDFs and images into one document. Drag in JPG, PNG, WebP, TIFF, BMP, or GIF — they become pages instantly. No conversion step.</p></div>
+    <div class="feature-card"><span class="icon">✂️</span><h3>Split PDFs</h3><p>Extract specific pages or type a range like "1-10, 25, 30-45". Visual selection with thumbnails. Split by range or pick individual pages.</p></div>
+    <div class="feature-card"><span class="icon">📐</span><h3>Organize Pages</h3><p>All your pages as thumbnails. Drag to reorder, rotate, or delete. Full undo support — change your mind anytime.</p></div>
+    <div class="feature-card"><span class="icon">📦</span><h3>Real Compression</h3><p>Not "remove metadata" compression. PDF Kit resamples images at the resolution you choose. 122 MB → 27 MB. Three presets: email, office, print.</p></div>
+    <div class="feature-card"><span class="icon">🖨️</span><h3>Batch Print</h3><p>Drag 20 PDFs and print them all with one click. A cover page between each document shows the filename for instant sorting from the paper stack.</p></div>
+    <div class="feature-card"><span class="icon">🖍️</span><h3>Highlight Text</h3><p>Smooth marker that follows your cursor across lines — just like a real highlighter. Four colors. Saved as standard PDF annotations visible in any viewer.</p></div>
+    <div class="feature-card"><span class="icon">✏️</span><h3>Add Text</h3><p>Click anywhere to place a note, label, or comment. Choose font size and color. No need to open a full editor for a quick annotation.</p></div>
+    <div class="feature-card"><span class="icon">🖼️</span><h3>Export to Images</h3><p>Save any page as PNG or JPG. Choose 72, 150, or 300 DPI. Export all pages, current page, or a custom range.</p></div>
+  </div>
+
+  <div class="grid-features lang-es">
+    <div class="feature-card"><span class="icon">📄</span><h3>Ver PDFs</h3><p>Desplazamiento suave, zoom, búsqueda de texto y atajos de teclado. Renderizado con el mismo motor del navegador más popular del mundo.</p></div>
+    <div class="feature-card"><span class="icon">🔗</span><h3>Unir Archivos e Imágenes</h3><p>Combina PDFs e imágenes en un solo documento. Arrastra JPG, PNG, WebP, TIFF, BMP o GIF — se convierten en páginas al instante. Sin paso de conversión.</p></div>
+    <div class="feature-card"><span class="icon">✂️</span><h3>Dividir PDFs</h3><p>Extrae páginas específicas o escribe un rango como "1-10, 25, 30-45". Selección visual con miniaturas.</p></div>
+    <div class="feature-card"><span class="icon">📐</span><h3>Organizar Páginas</h3><p>Todas tus páginas como miniaturas. Arrastra para reordenar, rota o elimina. Soporte completo de deshacer.</p></div>
+    <div class="feature-card"><span class="icon">📦</span><h3>Compresión Real</h3><p>No es "quitar metadatos". PDF Kit remuestrea las imágenes a la resolución que elijas. 122 MB → 27 MB. Tres niveles: correo, oficina, impresión.</p></div>
+    <div class="feature-card"><span class="icon">🖨️</span><h3>Impresión en Lote</h3><p>Arrastra 20 PDFs e imprímelos todos con un clic. Una portada entre cada documento muestra el nombre del archivo para separar al instante.</p></div>
+    <div class="feature-card"><span class="icon">🖍️</span><h3>Resaltar Texto</h3><p>Marcador suave que sigue tu cursor entre líneas — como un marcatextos real. Cuatro colores. Guardado como anotación PDF estándar visible en cualquier visor.</p></div>
+    <div class="feature-card"><span class="icon">✏️</span><h3>Agregar Texto</h3><p>Haz clic en cualquier parte para colocar una nota, etiqueta o comentario. Elige tamaño y color de fuente.</p></div>
+    <div class="feature-card"><span class="icon">🖼️</span><h3>Exportar a Imágenes</h3><p>Guarda cualquier página como PNG o JPG. Elige 72, 150 o 300 DPI. Exporta todas las páginas, la actual o un rango.</p></div>
+  </div>
+</section>
+
+<!-- SCREENSHOTS SHOWCASE -->
+<section id="showcase">
+  <div class="section-header">
+    <h2 class="lang-en">See it in action.</h2>
+    <h2 class="lang-es">Míralo en acción.</h2>
+    <p class="lang-en">Real screenshots from PDF Kit. What you see is what you get.</p>
+    <p class="lang-es">Capturas reales de PDF Kit. Lo que ves es lo que obtienes.</p>
+  </div>
+
+  <div class="screenshots">
+    <div class="screenshot-row">
+      <img src="Pantalla merge.png" alt="Merge PDFs" loading="lazy">
+      <div class="screenshot-text">
+        <h3 class="lang-en">Merge PDFs & Images</h3>
+        <h3 class="lang-es">Unir PDFs e Imágenes</h3>
+        <p class="lang-en">Drag in multiple PDFs or images and combine them into one document. Visual page thumbnails let you see exactly what you're merging before you commit.</p>
+        <p class="lang-es">Arrastra múltiples PDFs o imágenes y combínalos en un solo documento. Las miniaturas te permiten ver exactamente lo que estás uniendo antes de confirmar.</p>
+      </div>
+    </div>
+
+    <div class="screenshot-row reverse">
+      <img src="pantalla split.png" alt="Split PDF" loading="lazy">
+      <div class="screenshot-text">
+        <h3 class="lang-en">Split with Precision</h3>
+        <h3 class="lang-es">Divide con Precisión</h3>
+        <p class="lang-en">Select individual pages or type a range. Visual thumbnails with color-coded selections make it easy to extract exactly the pages you need.</p>
+        <p class="lang-es">Selecciona páginas individuales o escribe un rango. Miniaturas visuales con selecciones codificadas por color hacen fácil extraer exactamente las páginas que necesitas.</p>
+      </div>
+    </div>
+
+    <div class="screenshot-row">
+      <img src="pantalla organizar.png" alt="Organize Pages" loading="lazy">
+      <div class="screenshot-text">
+        <h3 class="lang-en">Organize & Reorder</h3>
+        <h3 class="lang-es">Organiza y Reordena</h3>
+        <p class="lang-en">See all pages as thumbnails. Drag to reorder, rotate, or delete. Full undo support so you can experiment freely without worry.</p>
+        <p class="lang-es">Ve todas las páginas como miniaturas. Arrastra para reordenar, rota o elimina. Soporte completo de deshacer para experimentar libremente.</p>
+      </div>
+    </div>
+
+    <div class="screenshot-row reverse">
+      <img src="Pantalla Compress PDF.png" alt="Compress PDF" loading="lazy">
+      <div class="screenshot-text">
+        <h3 class="lang-en">Real Compression</h3>
+        <h3 class="lang-es">Compresión Real</h3>
+        <p class="lang-en">Not just metadata stripping. PDF Kit resamples images at the DPI you choose. Three presets for email, office, or print — with instant before/after comparison.</p>
+        <p class="lang-es">No solo elimina metadatos. PDF Kit remuestrea imágenes al DPI que elijas. Tres presets para correo, oficina o impresión — con comparación instantánea antes/después.</p>
+      </div>
+    </div>
+
+    <div class="screenshot-row">
+      <img src="PDF viewer-add text.png" alt="View and annotate PDFs" loading="lazy">
+      <div class="screenshot-text">
+        <h3 class="lang-en">View & Add Text</h3>
+        <h3 class="lang-es">Ver y Agregar Texto</h3>
+        <p class="lang-en">A full PDF viewer with smooth scrolling, zoom, and page navigation. Click anywhere to add text annotations — no need for a heavy editor.</p>
+        <p class="lang-es">Un visor PDF completo con desplazamiento suave, zoom y navegación de páginas. Haz clic en cualquier parte para agregar anotaciones de texto.</p>
+      </div>
+    </div>
+
+    <div class="screenshot-row reverse">
+      <img src="Imprimir en multiples PDF.png" alt="Batch print" loading="lazy">
+      <div class="screenshot-text">
+        <h3 class="lang-en">Batch Print</h3>
+        <h3 class="lang-es">Impresión en Lote</h3>
+        <p class="lang-en">Load multiple PDFs and print them all at once. Automatic cover pages between documents show the filename, making it easy to sort from the paper stack.</p>
+        <p class="lang-es">Carga múltiples PDFs e imprímelos todos de una vez. Portadas automáticas entre documentos muestran el nombre del archivo para separar fácilmente.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRIVACY -->
+<section>
+  <div class="privacy-banner">
+    <h2 class="lang-en">Your documents never leave your PC.</h2>
+    <h2 class="lang-es">Tus documentos nunca salen de tu PC.</h2>
+    <p class="lang-en">
+      While online PDF tools send your contracts, tax returns, and medical records through their servers, 
+      PDF Kit processes everything locally. Privacy as a feature, not a promise.
+    </p>
+    <p class="lang-es">
+      Mientras las herramientas en línea envían tus contratos, declaraciones de impuestos y expedientes médicos 
+      a través de sus servidores, PDF Kit procesa todo localmente. Privacidad como función, no como promesa.
+    </p>
+    <div class="privacy-tags">
+      <span class="lang-en">No telemetry</span><span class="lang-es">Sin telemetría</span>
+      <span class="lang-en">No cloud</span><span class="lang-es">Sin nube</span>
+      <span class="lang-en">No account</span><span class="lang-es">Sin cuenta</span>
+      <span class="lang-en">Works offline</span><span class="lang-es">Funciona offline</span>
+      <span class="lang-en">No ads. Ever.</span><span class="lang-es">Sin publicidad. Nunca.</span>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="section-header">
+    <h2 class="lang-en">One purchase. Forever yours.</h2>
+    <h2 class="lang-es">Una compra. Para siempre.</h2>
+    <p class="lang-en">Every feature included. No tiers, no upsells, no tricks.</p>
+    <p class="lang-es">Todas las funciones incluidas. Sin niveles, sin ventas adicionales.</p>
+  </div>
+  <div class="pricing-grid">
+    <div class="price-card">
+      <h3>PDF Kit</h3>
+      <p class="price lang-en">One-time purchase on Microsoft Store</p>
+      <p class="price lang-es">Pago único en Microsoft Store</p>
+      <p class="price-note lang-en">No subscription. No recurring charges. Pay once.</p>
+      <p class="price-note lang-es">Sin suscripción. Sin cargos recurrentes. Paga una vez.</p>
+      <ul>
+        <li class="lang-en">View, merge, split, organize, compress PDFs</li><li class="lang-es">Ver, unir, dividir, organizar, comprimir PDFs</li>
+        <li class="lang-en">Batch print with automatic cover pages</li><li class="lang-es">Impresión en lote con portadas automáticas</li>
+        <li class="lang-en">Highlight text with 4 colors</li><li class="lang-es">Resaltar texto con 4 colores</li>
+        <li class="lang-en">Add text annotations anywhere</li><li class="lang-es">Agregar texto en cualquier parte</li>
+        <li class="lang-en">Export pages as PNG/JPG images</li><li class="lang-es">Exportar páginas como imágenes PNG/JPG</li>
+        <li class="lang-en">Real compression with image downsampling</li><li class="lang-es">Compresión real con reducción de imágenes</li>
+        <li class="lang-en">Import images: JPG, PNG, WebP, TIFF, BMP, GIF</li><li class="lang-es">Importar imágenes: JPG, PNG, WebP, TIFF, BMP, GIF</li>
+        <li class="lang-en">100% private — files never leave your PC</li><li class="lang-es">100% privado — archivos nunca salen de tu PC</li>
+        <li class="lang-en">30 languages supported</li><li class="lang-es">30 idiomas soportados</li>
+        <li class="lang-en">All future updates included</li><li class="lang-es">Todas las actualizaciones futuras incluidas</li>
+      </ul>
+      <a href="https://apps.microsoft.com/detail/9P9R7V8C5BMZ" class="btn-primary lang-en">Get PDF Kit</a>
+      <a href="https://apps.microsoft.com/detail/9P9R7V8C5BMZ" class="btn-primary lang-es">Obtener PDF Kit</a>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section>
+  <div class="section-header">
+    <h2 class="lang-en">Common questions</h2>
+    <h2 class="lang-es">Preguntas frecuentes</h2>
+  </div>
+  <div class="faq-list">
+    <div class="faq-item" onclick="this.classList.toggle('open')">
+      <div class="faq-q"><span class="lang-en">Is PDF Kit a subscription?</span><span class="lang-es">¿PDF Kit es una suscripción?</span></div>
+      <div class="faq-a"><span class="lang-en">No. PDF Kit is a one-time purchase from the Microsoft Store. Pay once and it's yours forever, including all future updates within the same major version.</span><span class="lang-es">No. PDF Kit es un pago único en la Microsoft Store. Paga una vez y es tuyo para siempre, incluyendo todas las actualizaciones futuras dentro de la misma versión.</span></div>
+    </div>
+    <div class="faq-item" onclick="this.classList.toggle('open')">
+      <div class="faq-q"><span class="lang-en">Does PDF Kit upload my files anywhere?</span><span class="lang-es">¿PDF Kit sube mis archivos a algún lado?</span></div>
+      <div class="faq-a"><span class="lang-en">Never. All processing happens locally on your PC. No cloud, no uploads, no account required. Your contracts, tax returns, and personal documents stay completely private.</span><span class="lang-es">Nunca. Todo el procesamiento ocurre localmente en tu PC. Sin nube, sin subidas, sin cuenta requerida. Tus contratos, declaraciones de impuestos y documentos personales se quedan completamente privados.</span></div>
+    </div>
+    <div class="faq-item" onclick="this.classList.toggle('open')">
+      <div class="faq-q"><span class="lang-en">Can I highlight text and see it in other PDF readers?</span><span class="lang-es">¿Puedo resaltar texto y verlo en otros lectores PDF?</span></div>
+      <div class="faq-a"><span class="lang-en">Yes. Highlights are saved as standard PDF annotations. They're visible in Microsoft Edge, Adobe Acrobat Reader, Chrome, and any other PDF viewer that supports the PDF standard.</span><span class="lang-es">Sí. Los resaltados se guardan como anotaciones PDF estándar. Son visibles en Microsoft Edge, Adobe Acrobat Reader, Chrome y cualquier otro visor PDF que soporte el estándar PDF.</span></div>
+    </div>
+    <div class="faq-item" onclick="this.classList.toggle('open')">
+      <div class="faq-q"><span class="lang-en">What makes the compression different?</span><span class="lang-es">¿Qué hace diferente la compresión?</span></div>
+      <div class="faq-a"><span class="lang-en">Most free tools only strip metadata or apply basic deflation. PDF Kit actually resamples images inside the PDF at the DPI you choose (72, 150, or 300). A 122 MB file becomes 27 MB — 78% smaller — with quality you can control.</span><span class="lang-es">La mayoría de las herramientas gratuitas solo eliminan metadatos o aplican deflación básica. PDF Kit remuestrea las imágenes dentro del PDF al DPI que elijas (72, 150 o 300). Un archivo de 122 MB se convierte en 27 MB — 78% más pequeño — con calidad que puedes controlar.</span></div>
+    </div>
+    <div class="faq-item" onclick="this.classList.toggle('open')">
+      <div class="faq-q"><span class="lang-en">Does it work offline?</span><span class="lang-es">¿Funciona sin internet?</span></div>
+      <div class="faq-a"><span class="lang-en">Yes. PDF Kit works 100% offline. The only network call is Microsoft Store license verification, which is handled by Windows — not by our app.</span><span class="lang-es">Sí. PDF Kit funciona 100% sin internet. La única llamada de red es la verificación de licencia de Microsoft Store, que es manejada por Windows — no por nuestra app.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <h2 class="lang-en">Ready to own your PDF toolkit?</h2>
+  <h2 class="lang-es">¿Listo para tener tu kit de herramientas PDF?</h2>
+  <p class="lang-en">One-time purchase on the Microsoft Store. No account, no cloud, no subscription.</p>
+  <p class="lang-es">Pago único en la Microsoft Store. Sin cuenta, sin nube, sin suscripción.</p>
+  <a href="https://apps.microsoft.com/detail/9P9R7V8C5BMZ" class="btn-primary lang-en">Get PDF Kit — Microsoft Store</a>
+  <a href="https://apps.microsoft.com/detail/9P9R7V8C5BMZ" class="btn-primary lang-es">Obtener PDF Kit — Microsoft Store</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>
+    <span class="lang-en">PDF Kit — Haven Tech · Built for Windows · Private by design</span>
+    <span class="lang-es">PDF Kit — Haven Tech · Hecho para Windows · Privado por diseño</span>
+  </p>
+  <p style="margin-top: 0.75rem;">
+    <a href="https://apps.microsoft.com/detail/9P9R7V8C5BMZ">Microsoft Store</a>
+    <a href="https://cesarlugom.github.io/haven-software-legal/">
+      <span class="lang-en">Privacy Policy</span><span class="lang-es">Política de Privacidad</span>
+    </a>
+    <a href="mailto:cesarlugom@gmail.com">
+      <span class="lang-en">Contact</span><span class="lang-es">Contacto</span>
+    </a>
+  </p>
+  <p style="margin-top: 0.75rem;">
+    <span class="lang-en">Also by Haven Tech:</span><span class="lang-es">También de Haven Tech:</span>
+    <a href="https://cesarlugom.github.io/Haven-Intelligent-Cleanup/">Intelligent Cleanup</a>
+  </p>
+</footer>
+
+<script>
+function setLang(lang) {
+  document.body.className = lang;
+  document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+  document.getElementById('btn-es').classList.toggle('active', lang === 'es');
+  localStorage.setItem('pdfkit-lang', lang);
+}
+// Auto-detect
+const saved = localStorage.getItem('pdfkit-lang');
+if (saved) setLang(saved);
+else if (navigator.language.startsWith('es')) setLang('es');
+</script>
+
+</body>
+</html>
