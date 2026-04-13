@@ -237,8 +237,9 @@ section { padding: 100px 2rem; }
 .screenshot-row.reverse { flex-direction: row-reverse; }
 
 .screenshot-row img {
-  flex: 1; max-width: 60%; border-radius: 12px;
+  width: 60%; height: auto; border-radius: 12px;
   box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+  flex-shrink: 0;
 }
 .screenshot-text { flex: 1; }
 .screenshot-text h3 {
@@ -373,7 +374,7 @@ footer a:hover { color: var(--orange); }
   .screenshot-row, .screenshot-row.reverse {
     flex-direction: column; gap: 1.5rem;
   }
-  .screenshot-row img { max-width: 100%; }
+  .screenshot-row img { width: 100%; height: auto; }
   .screenshot-text h3 { font-size: 1.2rem; }
   .screenshot-text p { font-size: 0.9rem; }
   .screenshots { gap: 3rem; }
