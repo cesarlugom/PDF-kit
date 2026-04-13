@@ -376,16 +376,13 @@ footer a:hover { color: var(--orange); }
   .screenshot-row img { max-width: 100%; }
   .screenshot-text h3 { font-size: 1.2rem; }
   .screenshot-text p { font-size: 0.9rem; }
-  #showcase .screenshots {
-    flex-direction: row; overflow-x: auto; scroll-snap-type: x mandatory;
-    gap: 1.5rem; padding-bottom: 1rem; -webkit-overflow-scrolling: touch;
-  }
+  .screenshots { gap: 3rem; }
   .screenshot-row, .screenshot-row.reverse {
-    flex-direction: column; gap: 1.25rem;
-    min-width: 85vw; flex-shrink: 0; scroll-snap-align: center;
+    flex-direction: column; gap: 1rem;
   }
-  .screenshot-row img { max-width: 100%; }
-  .screenshot-text h3 { font-size: 1.1rem; }
+  .screenshot-row img { max-width: 100%; border-radius: 8px; }
+  .screenshot-text { text-align: center; }
+  .screenshot-text h3 { font-size: 1.15rem; }
   .screenshot-text p { font-size: 0.9rem; }
   .privacy-banner { padding: 2rem 1.25rem; }
   .privacy-banner h2 { font-size: 1.3rem; }
