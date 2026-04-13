@@ -228,24 +228,34 @@ section { padding: 100px 2rem; }
 /* SCREENSHOTS SECTION */
 .screenshots {
   max-width: 1100px; margin: 0 auto;
-  display: flex; flex-direction: column; gap: 4rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.5rem;
 }
 
-.screenshot-row {
-  display: flex; align-items: center; gap: 3rem;
+.screenshot-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.3s;
 }
-.screenshot-row.reverse { flex-direction: row-reverse; }
-
-.screenshot-row img {
-  flex: 1; max-width: 60%; border-radius: 12px;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+.screenshot-card:hover {
+  border-color: var(--orange);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.3);
 }
-.screenshot-text { flex: 1; }
-.screenshot-text h3 {
-  font-size: 1.5rem; font-weight: 700; margin-bottom: 0.75rem;
+.screenshot-card img {
+  width: 100%; display: block;
 }
-.screenshot-text p {
-  color: var(--text-secondary); font-size: 1rem;
+.screenshot-card .screenshot-text {
+  padding: 1.25rem;
+}
+.screenshot-card .screenshot-text h3 {
+  font-size: 1.1rem; font-weight: 600; margin-bottom: 0.4rem;
+}
+.screenshot-card .screenshot-text p {
+  color: var(--text-secondary); font-size: 0.9rem;
 }
 
 /* PRIVACY BANNER */
@@ -358,10 +368,7 @@ footer a:hover { color: var(--orange); }
 
 /* RESPONSIVE */
 @media (max-width: 768px) {
-  .screenshot-row, .screenshot-row.reverse {
-    flex-direction: column;
-  }
-  .screenshot-row img { max-width: 100%; }
+  .screenshots { grid-template-columns: 1fr; }
   .nav-links { display: none; }
   .hero-buttons { flex-direction: column; }
 }
@@ -474,63 +481,63 @@ footer a:hover { color: var(--orange); }
   </div>
 
   <div class="screenshots">
-    <div class="screenshot-row">
+    <div class="screenshot-card">
       <img src="Pantalla merge.png" alt="Merge PDFs" loading="lazy">
       <div class="screenshot-text">
         <h3 class="lang-en">Merge PDFs & Images</h3>
         <h3 class="lang-es">Unir PDFs e Imágenes</h3>
-        <p class="lang-en">Drag in multiple PDFs or images and combine them into one document. Visual page thumbnails let you see exactly what you're merging before you commit.</p>
-        <p class="lang-es">Arrastra múltiples PDFs o imágenes y combínalos en un solo documento. Las miniaturas te permiten ver exactamente lo que estás uniendo antes de confirmar.</p>
+        <p class="lang-en">Combine multiple PDFs and images into one document with visual thumbnails.</p>
+        <p class="lang-es">Combina múltiples PDFs e imágenes en un solo documento con miniaturas visuales.</p>
       </div>
     </div>
 
-    <div class="screenshot-row reverse">
+    <div class="screenshot-card">
       <img src="pantalla split.png" alt="Split PDF" loading="lazy">
       <div class="screenshot-text">
         <h3 class="lang-en">Split with Precision</h3>
         <h3 class="lang-es">Divide con Precisión</h3>
-        <p class="lang-en">Select individual pages or type a range. Visual thumbnails with color-coded selections make it easy to extract exactly the pages you need.</p>
-        <p class="lang-es">Selecciona páginas individuales o escribe un rango. Miniaturas visuales con selecciones codificadas por color hacen fácil extraer exactamente las páginas que necesitas.</p>
+        <p class="lang-en">Select individual pages or type a range with color-coded visual selection.</p>
+        <p class="lang-es">Selecciona páginas individuales o escribe un rango con selección visual.</p>
       </div>
     </div>
 
-    <div class="screenshot-row">
+    <div class="screenshot-card">
       <img src="pantalla organizar.png" alt="Organize Pages" loading="lazy">
       <div class="screenshot-text">
         <h3 class="lang-en">Organize & Reorder</h3>
         <h3 class="lang-es">Organiza y Reordena</h3>
-        <p class="lang-en">See all pages as thumbnails. Drag to reorder, rotate, or delete. Full undo support so you can experiment freely without worry.</p>
-        <p class="lang-es">Ve todas las páginas como miniaturas. Arrastra para reordenar, rota o elimina. Soporte completo de deshacer para experimentar libremente.</p>
+        <p class="lang-en">Drag to reorder, rotate, or delete pages. Full undo support.</p>
+        <p class="lang-es">Arrastra para reordenar, rota o elimina páginas. Soporte de deshacer.</p>
       </div>
     </div>
 
-    <div class="screenshot-row reverse">
+    <div class="screenshot-card">
       <img src="Pantalla Compress PDF.png" alt="Compress PDF" loading="lazy">
       <div class="screenshot-text">
         <h3 class="lang-en">Real Compression</h3>
         <h3 class="lang-es">Compresión Real</h3>
-        <p class="lang-en">Not just metadata stripping. PDF Kit resamples images at the DPI you choose. Three presets for email, office, or print — with instant before/after comparison.</p>
-        <p class="lang-es">No solo elimina metadatos. PDF Kit remuestrea imágenes al DPI que elijas. Tres presets para correo, oficina o impresión — con comparación instantánea antes/después.</p>
+        <p class="lang-en">Resample images at the DPI you choose. Three presets with instant comparison.</p>
+        <p class="lang-es">Remuestrea imágenes al DPI que elijas. Tres presets con comparación instantánea.</p>
       </div>
     </div>
 
-    <div class="screenshot-row">
+    <div class="screenshot-card">
       <img src="PDF viewer-add text.png" alt="View and annotate PDFs" loading="lazy">
       <div class="screenshot-text">
         <h3 class="lang-en">View & Add Text</h3>
         <h3 class="lang-es">Ver y Agregar Texto</h3>
-        <p class="lang-en">A full PDF viewer with smooth scrolling, zoom, and page navigation. Click anywhere to add text annotations — no need for a heavy editor.</p>
-        <p class="lang-es">Un visor PDF completo con desplazamiento suave, zoom y navegación de páginas. Haz clic en cualquier parte para agregar anotaciones de texto.</p>
+        <p class="lang-en">Full PDF viewer with smooth scrolling. Click anywhere to add text.</p>
+        <p class="lang-es">Visor PDF completo con desplazamiento suave. Clic para agregar texto.</p>
       </div>
     </div>
 
-    <div class="screenshot-row reverse">
+    <div class="screenshot-card">
       <img src="Imprimir en multiples PDF.png" alt="Batch print" loading="lazy">
       <div class="screenshot-text">
         <h3 class="lang-en">Batch Print</h3>
         <h3 class="lang-es">Impresión en Lote</h3>
-        <p class="lang-en">Load multiple PDFs and print them all at once. Automatic cover pages between documents show the filename, making it easy to sort from the paper stack.</p>
-        <p class="lang-es">Carga múltiples PDFs e imprímelos todos de una vez. Portadas automáticas entre documentos muestran el nombre del archivo para separar fácilmente.</p>
+        <p class="lang-en">Print multiple PDFs at once with automatic cover pages between documents.</p>
+        <p class="lang-es">Imprime múltiples PDFs de una vez con portadas automáticas entre documentos.</p>
       </div>
     </div>
   </div>
