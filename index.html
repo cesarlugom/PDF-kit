@@ -358,12 +358,32 @@ footer a:hover { color: var(--orange); }
 
 /* RESPONSIVE */
 @media (max-width: 768px) {
+  .nav-links { display: none; }
+  .hero { padding: 100px 1.25rem 60px; }
+  .hero h1 { font-size: 2rem; }
+  .hero-sub { font-size: 1rem; }
+  .hero-buttons { flex-direction: column; align-items: center; }
+  .hero-screenshot { margin-top: 2rem; }
+  .hero-screenshot img { border-radius: 8px; }
+  section { padding: 60px 1.25rem; }
+  .section-header { margin-bottom: 2rem; }
+  .section-header h2 { font-size: 1.5rem; }
+  .grid-features { grid-template-columns: 1fr !important; gap: 1rem; }
+  .feature-card { padding: 1.5rem; }
   .screenshot-row, .screenshot-row.reverse {
-    flex-direction: column;
+    flex-direction: column; gap: 1.5rem;
   }
   .screenshot-row img { max-width: 100%; }
-  .nav-links { display: none; }
-  .hero-buttons { flex-direction: column; }
+  .screenshot-text h3 { font-size: 1.2rem; }
+  .screenshot-text p { font-size: 0.9rem; }
+  .screenshots { gap: 2.5rem; }
+  .privacy-banner { padding: 2rem 1.25rem; }
+  .privacy-banner h2 { font-size: 1.3rem; }
+  .privacy-tags { gap: 0.5rem; }
+  .privacy-tags span { padding: 6px 12px; font-size: 0.75rem; }
+  .price-card { padding: 1.5rem; }
+  .cta-section h2 { font-size: 1.5rem; }
+  .faq-q { font-size: 0.95rem; }
 }
 </style>
 </head>
