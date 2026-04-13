@@ -427,8 +427,7 @@ footer a:hover { color: var(--orange); }
     <span class="lang-es">Disponible en Microsoft Store</span>
   </div>
 
-  <h1 class="lang-en">Stop paying monthly<br>and uploading your files<br>to <span class="accent">unsecure pages.</span></h1>
-  <h1 class="lang-es">Deja de pagar mensual<br>y de subir tus archivos<br>a <span class="accent">páginas inseguras.</span></h1>
+  <h1 id="hero-headline">All your PDFs. <span class="accent">Always on your PC.</span></h1>
 
   <p class="hero-sub lang-en">
     Merge, split, organize, compress, highlight, print, and add text to any PDF.
@@ -682,16 +681,87 @@ footer a:hover { color: var(--orange); }
 </footer>
 
 <script>
+// Headline translations — 30 languages
+const HEADLINES = {
+  'en':    'All your PDFs. <span class="accent">Always on your PC.</span>',
+  'es':    'Todos tus PDFs. <span class="accent">Siempre en tu equipo.</span>',
+  'pt-BR': 'Todos os seus PDFs. <span class="accent">Sempre no seu PC.</span>',
+  'pt':    'Todos os seus PDFs. <span class="accent">Sempre no seu PC.</span>',
+  'fr':    'Tous vos PDF. <span class="accent">Toujours sur votre PC.</span>',
+  'de':    'Alle Ihre PDFs. <span class="accent">Immer auf Ihrem PC.</span>',
+  'it':    'Tutti i tuoi PDF. <span class="accent">Sempre sul tuo PC.</span>',
+  'nl':    "Al je PDF's. <span class=\"accent\">Altijd op je pc.</span>",
+  'pl':    'Wszystkie Twoje PDF-y. <span class="accent">Zawsze na Twoim PC.</span>',
+  'tr':    "Tüm PDF'leriniz. <span class=\"accent\">Her zaman bilgisayarınızda.</span>",
+  'ru':    'Все ваши PDF. <span class="accent">Всегда на вашем ПК.</span>',
+  'ja':    'すべてのPDFを、<span class="accent">いつもあなたのPCで。</span>',
+  'ko':    '모든 PDF를. <span class="accent">언제나 내 PC에서.</span>',
+  'zh-CN': '所有PDF，<span class="accent">始终在你的电脑上。</span>',
+  'zh-TW': '所有PDF，<span class="accent">始終在你的電腦上。</span>',
+  'ar':    'جميع ملفات PDF. <span class="accent">دائمًا على جهازك.</span>',
+  'hi':    'आपकी सभी PDF फ़ाइलें। <span class="accent">हमेशा आपके PC पर।</span>',
+  'id':    'Semua PDF Anda. <span class="accent">Selalu di PC Anda.</span>',
+  'vi':    'Tất cả PDF của bạn. <span class="accent">Luôn trên PC của bạn.</span>',
+  'th':    'ทุก PDF ของคุณ <span class="accent">อยู่บน PC ของคุณเสมอ</span>',
+  'uk':    'Усі ваші PDF. <span class="accent">Завжди на вашому ПК.</span>',
+  'cs':    'Všechny vaše PDF. <span class="accent">Vždy na vašem PC.</span>',
+  'sv':    'Alla dina PDF-filer. <span class="accent">Alltid på din dator.</span>',
+  'ro':    'Toate PDF-urile tale. <span class="accent">Mereu pe PC-ul tău.</span>',
+  'hu':    'Minden PDF-ed. <span class="accent">Mindig a számítógépeden.</span>',
+  'el':    'Όλα τα PDF σου. <span class="accent">Πάντα στον υπολογιστή σου.</span>',
+  'da':    "Alle dine PDF'er. <span class=\"accent\">Altid på din pc.</span>",
+  'nb':    'Alle PDF-ene dine. <span class="accent">Alltid på din PC.</span>',
+  'no':    'Alle PDF-ene dine. <span class="accent">Alltid på din PC.</span>',
+  'fi':    'Kaikki PDF-tiedostosi. <span class="accent">Aina omalla tietokoneellasi.</span>',
+  'ms':    'Semua PDF anda. <span class="accent">Sentiasa di PC anda.</span>',
+  'fil':   'Lahat ng PDF mo. <span class="accent">Palaging nasa PC mo.</span>',
+  'tl':    'Lahat ng PDF mo. <span class="accent">Palaging nasa PC mo.</span>'
+};
+
+// RTL languages
+const RTL_LANGS = ['ar', 'he', 'fa', 'ur'];
+
+function resolveHeadlineKey(lang) {
+  if (!lang) return 'en';
+  if (HEADLINES[lang]) return lang;
+  // Chinese variants
+  if (lang.startsWith('zh')) {
+    return (lang.includes('TW') || lang.includes('HK') || lang.includes('Hant')) ? 'zh-TW' : 'zh-CN';
+  }
+  // Portuguese variants
+  if (lang.startsWith('pt')) return 'pt-BR';
+  // Try base language
+  const base = lang.split('-')[0];
+  if (HEADLINES[base]) return base;
+  return 'en';
+}
+
+function setHeadline(lang) {
+  const key = resolveHeadlineKey(lang);
+  document.getElementById('hero-headline').innerHTML = HEADLINES[key];
+  document.getElementById('hero-headline').setAttribute('dir', RTL_LANGS.includes(key) ? 'rtl' : 'ltr');
+}
+
 function setLang(lang) {
   document.body.className = lang;
   document.getElementById('btn-en').classList.toggle('active', lang === 'en');
   document.getElementById('btn-es').classList.toggle('active', lang === 'es');
   localStorage.setItem('pdfkit-lang', lang);
+  // When user manually toggles, override headline to match
+  setHeadline(lang);
 }
-// Auto-detect
+
+// Auto-detect on load
+const browserLang = navigator.language || 'en';
 const saved = localStorage.getItem('pdfkit-lang');
-if (saved) setLang(saved);
-else if (navigator.language.startsWith('es')) setLang('es');
+if (saved) {
+  setLang(saved);
+} else if (browserLang.startsWith('es')) {
+  setLang('es');
+} else {
+  // Body stays EN, but headline uses detected language (any of 30)
+  setHeadline(browserLang);
+}
 </script>
 
 </body>
