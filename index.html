@@ -376,7 +376,17 @@ footer a:hover { color: var(--orange); }
   .screenshot-row img { max-width: 100%; }
   .screenshot-text h3 { font-size: 1.2rem; }
   .screenshot-text p { font-size: 0.9rem; }
-  #showcase { display: none; }
+  #showcase .screenshots {
+    flex-direction: row; overflow-x: auto; scroll-snap-type: x mandatory;
+    gap: 1.5rem; padding-bottom: 1rem; -webkit-overflow-scrolling: touch;
+  }
+  .screenshot-row, .screenshot-row.reverse {
+    flex-direction: column; gap: 1.25rem;
+    min-width: 85vw; flex-shrink: 0; scroll-snap-align: center;
+  }
+  .screenshot-row img { max-width: 100%; }
+  .screenshot-text h3 { font-size: 1.1rem; }
+  .screenshot-text p { font-size: 0.9rem; }
   .privacy-banner { padding: 2rem 1.25rem; }
   .privacy-banner h2 { font-size: 1.3rem; }
   .privacy-tags { gap: 0.5rem; }
