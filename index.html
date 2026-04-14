@@ -38,17 +38,6 @@ body {
   overflow-x: hidden;
 }
 
-/* Language toggle */
-.lang-en, .lang-es { display: none !important; }
-body.en .lang-en { display: block !important; }
-body.es .lang-es { display: block !important; }
-body.en span.lang-en, body.es span.lang-es { display: inline !important; }
-body.en a.lang-en, body.es a.lang-es { display: inline-flex !important; }
-body.en .lang-en.grid-features { display: grid !important; }
-body.es .lang-es.grid-features { display: grid !important; }
-body.en .lang-en.flex-row, body.es .lang-es.flex-row { display: flex !important; }
-body.en .lang-en.steps-grid, body.es .lang-es.steps-grid { display: grid !important; }
-
 /* NAV */
 nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
@@ -72,20 +61,14 @@ nav {
 }
 .nav-links a:hover { color: var(--orange-light); }
 
-.lang-switch {
-  display: flex; gap: 0.25rem; background: var(--bg-card);
-  border-radius: 6px; padding: 2px; border: 1px solid var(--border);
+.lang-select {
+  background: var(--bg-card); color: var(--text-primary);
+  border: 1px solid var(--border); border-radius: 6px;
+  padding: 6px 10px; font-size: 0.8rem; font-weight: 600;
+  font-family: var(--font-body); cursor: pointer;
+  max-width: 140px;
 }
-.lang-switch button {
-  background: none; border: none; color: var(--text-muted);
-  padding: 4px 10px; border-radius: 4px; font-size: 0.8rem;
-  font-weight: 600; cursor: pointer; font-family: var(--font-body);
-  transition: all 0.2s;
-}
-.lang-switch button.active {
-  background: var(--orange);
-  color: var(--bg-dark);
-}
+.lang-select:focus { outline: none; border-color: var(--orange); }
 
 /* HERO */
 .hero {
@@ -149,18 +132,6 @@ nav {
   background: var(--orange-light);
   transform: translateY(-2px);
   box-shadow: 0 8px 30px var(--orange-glow-strong);
-}
-
-.btn-secondary {
-  display: inline-flex; align-items: center; gap: 0.5rem;
-  background: transparent; color: var(--text-primary);
-  padding: 14px 28px; border-radius: 10px;
-  font-weight: 600; font-size: 1rem; text-decoration: none;
-  border: 1px solid var(--border); transition: all 0.2s;
-}
-.btn-secondary:hover {
-  border-color: var(--orange);
-  background: var(--orange-glow);
 }
 
 .hero-meta {
@@ -330,7 +301,7 @@ section { padding: 100px 2rem; }
   max-height: 0; overflow: hidden; transition: max-height 0.3s;
   padding-top: 0;
 }
-.faq-item.open .faq-a { max-height: 200px; padding-top: 1rem; }
+.faq-item.open .faq-a { max-height: 400px; padding-top: 1rem; }
 
 /* CTA */
 .cta-section {
@@ -359,7 +330,8 @@ footer a:hover { color: var(--orange); }
 
 /* RESPONSIVE */
 @media (max-width: 768px) {
-  .nav-links { display: none; }
+  .nav-links a { display: none; }
+  .nav-links { gap: 0.5rem; }
   .hero { padding: 100px 1.25rem 60px; }
   .hero h1 { font-size: 2rem; }
   .hero-sub { font-size: 1rem; }
@@ -369,19 +341,13 @@ footer a:hover { color: var(--orange); }
   section { padding: 60px 1.25rem; }
   .section-header { margin-bottom: 2rem; }
   .section-header h2 { font-size: 1.5rem; }
-  .grid-features { grid-template-columns: 1fr !important; gap: 1rem; }
+  .grid-features { grid-template-columns: 1fr; gap: 1rem; }
   .feature-card { padding: 1.5rem; }
-  .screenshot-row, .screenshot-row.reverse {
-    flex-direction: column; gap: 1.5rem;
-  }
-  .screenshot-row img { width: 100%; height: auto; }
-  .screenshot-text h3 { font-size: 1.2rem; }
-  .screenshot-text p { font-size: 0.9rem; }
   .screenshots { gap: 3rem; }
   .screenshot-row, .screenshot-row.reverse {
     flex-direction: column; gap: 1rem;
   }
-  .screenshot-row img { max-width: 100%; border-radius: 8px; }
+  .screenshot-row img { width: 100%; height: auto; border-radius: 8px; }
   .screenshot-text { text-align: center; }
   .screenshot-text h3 { font-size: 1.15rem; }
   .screenshot-text p { font-size: 0.9rem; }
@@ -395,7 +361,7 @@ footer a:hover { color: var(--orange); }
 }
 </style>
 </head>
-<body class="en">
+<body>
 
 <!-- NAV -->
 <nav>
@@ -404,18 +370,11 @@ footer a:hover { color: var(--orange); }
     <span>PDF Kit</span>
   </a>
   <div class="nav-links">
-    <a href="#features" class="lang-en">Features</a>
-    <a href="#features" class="lang-es">Funciones</a>
-    <a href="#showcase" class="lang-en">Screenshots</a>
-    <a href="#showcase" class="lang-es">Capturas</a>
-    <a href="#pricing" class="lang-en">Pricing</a>
-    <a href="#pricing" class="lang-es">Precio</a>
-    <a href="https://cesarlugom.github.io/haven-software-legal/" class="lang-en">Privacy</a>
-    <a href="https://cesarlugom.github.io/haven-software-legal/" class="lang-es">Privacidad</a>
-    <div class="lang-switch">
-      <button onclick="setLang('en')" id="btn-en" class="active">EN</button>
-      <button onclick="setLang('es')" id="btn-es">ES</button>
-    </div>
+    <a href="#features" data-i18n="nav.features">Features</a>
+    <a href="#showcase" data-i18n="nav.showcase">Screenshots</a>
+    <a href="#pricing" data-i18n="nav.pricing">Pricing</a>
+    <a href="https://cesarlugom.github.io/haven-software-legal/" data-i18n="nav.privacy">Privacy</a>
+    <select id="lang-select" class="lang-select" onchange="setLang(this.value)"></select>
   </div>
 </nav>
 
@@ -423,34 +382,18 @@ footer a:hover { color: var(--orange); }
 <section class="hero">
   <div class="hero-badge">
     <span class="dot"></span>
-    <span class="lang-en">Live on Microsoft Store</span>
-    <span class="lang-es">Disponible en Microsoft Store</span>
+    <span data-i18n="hero.badge">Live on Microsoft Store</span>
   </div>
 
-  <h1 id="hero-headline">All your PDFs. <span class="accent">Always on your PC.</span></h1>
+  <h1 id="hero-headline" data-i18n-html="hero.headline">All your PDFs. <span class="accent">Always on your PC.</span></h1>
 
-  <p class="hero-sub lang-en">
-    Merge, split, organize, compress, highlight, print, and add text to any PDF.
-    One-time purchase. Every feature included. Your files never leave your PC.
-  </p>
-  <p class="hero-sub lang-es">
-    Une, divide, organiza, comprime, resalta, imprime y agrega texto a cualquier PDF.
-    Pago único. Todas las funciones incluidas. Tus archivos nunca salen de tu PC.
-  </p>
+  <p class="hero-sub" data-i18n="hero.sub">Merge, split, organize, compress, highlight, print, and add text to any PDF. One-time purchase. Every feature included. Your files never leave your PC.</p>
 
   <div class="hero-buttons">
-    <a href="https://apps.microsoft.com/detail/9P9R7V8C5BMZ" class="btn-primary lang-en">
-      Get PDF Kit — Microsoft Store
-    </a>
-    <a href="https://apps.microsoft.com/detail/9P9R7V8C5BMZ" class="btn-primary lang-es">
-      Obtener PDF Kit — Microsoft Store
-    </a>
+    <a href="https://apps.microsoft.com/detail/9P9R7V8C5BMZ" class="btn-primary" data-i18n="hero.cta">Get PDF Kit — Microsoft Store</a>
   </div>
 
-  <p class="hero-meta">
-    <span class="lang-en">Nothing leaves your PC · No account · No subscription · 30 languages</span>
-    <span class="lang-es">Nada sale de tu PC · Sin cuenta · Sin suscripción · 30 idiomas</span>
-  </p>
+  <p class="hero-meta" data-i18n="hero.meta">Nothing leaves your PC · No account · No subscription · 30 languages</p>
 
   <div class="hero-screenshot">
     <img src="Pantalla home.png" alt="PDF Kit home screen">
@@ -460,104 +403,76 @@ footer a:hover { color: var(--orange); }
 <!-- WHAT YOU CAN DO -->
 <section id="features">
   <div class="section-header">
-    <h2 class="lang-en">Everything you need. Nothing you don't.</h2>
-    <h2 class="lang-es">Todo lo que necesitas. Nada que no.</h2>
-    <p class="lang-en">The tools that matter, built for speed and privacy.</p>
-    <p class="lang-es">Las herramientas que importan, hechas para velocidad y privacidad.</p>
+    <h2 data-i18n="features.header">Everything you need. Nothing you don't.</h2>
+    <p data-i18n="features.sub">The tools that matter, built for speed and privacy.</p>
   </div>
 
-  <div class="grid-features lang-en">
-    <div class="feature-card"><span class="icon">📄</span><h3>View PDFs</h3><p>Smooth scrolling, zoom, text search, and keyboard shortcuts. Rendered with the same engine behind the world's most popular browser.</p></div>
-    <div class="feature-card"><span class="icon">🔗</span><h3>Merge Files & Images</h3><p>Combine PDFs and images into one document. Drag in JPG, PNG, WebP, TIFF, BMP, or GIF — they become pages instantly. No conversion step.</p></div>
-    <div class="feature-card"><span class="icon">✂️</span><h3>Split PDFs</h3><p>Extract specific pages or type a range like "1-10, 25, 30-45". Visual selection with thumbnails. Split by range or pick individual pages.</p></div>
-    <div class="feature-card"><span class="icon">📐</span><h3>Organize Pages</h3><p>All your pages as thumbnails. Drag to reorder, rotate, or delete. Full undo support — change your mind anytime.</p></div>
-    <div class="feature-card"><span class="icon">📦</span><h3>Real Compression</h3><p>Not "remove metadata" compression. PDF Kit resamples images at the resolution you choose. 122 MB → 27 MB. Three presets: email, office, print.</p></div>
-    <div class="feature-card"><span class="icon">🖨️</span><h3>Batch Print</h3><p>Drag 20 PDFs and print them all with one click. A cover page between each document shows the filename for instant sorting from the paper stack.</p></div>
-    <div class="feature-card"><span class="icon">🖍️</span><h3>Highlight Text</h3><p>Smooth marker that follows your cursor across lines — just like a real highlighter. Four colors. Saved as standard PDF annotations visible in any viewer.</p></div>
-    <div class="feature-card"><span class="icon">✏️</span><h3>Add Text</h3><p>Click anywhere to place a note, label, or comment. Choose font size and color. No need to open a full editor for a quick annotation.</p></div>
-    <div class="feature-card"><span class="icon">🖼️</span><h3>Export to Images</h3><p>Save any page as PNG or JPG. Choose 72, 150, or 300 DPI. Export all pages, current page, or a custom range.</p></div>
-  </div>
-
-  <div class="grid-features lang-es">
-    <div class="feature-card"><span class="icon">📄</span><h3>Ver PDFs</h3><p>Desplazamiento suave, zoom, búsqueda de texto y atajos de teclado. Renderizado con el mismo motor del navegador más popular del mundo.</p></div>
-    <div class="feature-card"><span class="icon">🔗</span><h3>Unir Archivos e Imágenes</h3><p>Combina PDFs e imágenes en un solo documento. Arrastra JPG, PNG, WebP, TIFF, BMP o GIF — se convierten en páginas al instante. Sin paso de conversión.</p></div>
-    <div class="feature-card"><span class="icon">✂️</span><h3>Dividir PDFs</h3><p>Extrae páginas específicas o escribe un rango como "1-10, 25, 30-45". Selección visual con miniaturas.</p></div>
-    <div class="feature-card"><span class="icon">📐</span><h3>Organizar Páginas</h3><p>Todas tus páginas como miniaturas. Arrastra para reordenar, rota o elimina. Soporte completo de deshacer.</p></div>
-    <div class="feature-card"><span class="icon">📦</span><h3>Compresión Real</h3><p>No es "quitar metadatos". PDF Kit remuestrea las imágenes a la resolución que elijas. 122 MB → 27 MB. Tres niveles: correo, oficina, impresión.</p></div>
-    <div class="feature-card"><span class="icon">🖨️</span><h3>Impresión en Lote</h3><p>Arrastra 20 PDFs e imprímelos todos con un clic. Una portada entre cada documento muestra el nombre del archivo para separar al instante.</p></div>
-    <div class="feature-card"><span class="icon">🖍️</span><h3>Resaltar Texto</h3><p>Marcador suave que sigue tu cursor entre líneas — como un marcatextos real. Cuatro colores. Guardado como anotación PDF estándar visible en cualquier visor.</p></div>
-    <div class="feature-card"><span class="icon">✏️</span><h3>Agregar Texto</h3><p>Haz clic en cualquier parte para colocar una nota, etiqueta o comentario. Elige tamaño y color de fuente.</p></div>
-    <div class="feature-card"><span class="icon">🖼️</span><h3>Exportar a Imágenes</h3><p>Guarda cualquier página como PNG o JPG. Elige 72, 150 o 300 DPI. Exporta todas las páginas, la actual o un rango.</p></div>
+  <div class="grid-features">
+    <div class="feature-card"><span class="icon">📄</span><h3 data-i18n="feat.view.title">View PDFs</h3><p data-i18n="feat.view.desc">Smooth scrolling, zoom, text search, and keyboard shortcuts. Rendered with the same engine behind the world's most popular browser.</p></div>
+    <div class="feature-card"><span class="icon">🔗</span><h3 data-i18n="feat.merge.title">Merge Files & Images</h3><p data-i18n="feat.merge.desc">Combine PDFs and images into one document. Drag in JPG, PNG, WebP, TIFF, BMP, or GIF — they become pages instantly. No conversion step.</p></div>
+    <div class="feature-card"><span class="icon">✂️</span><h3 data-i18n="feat.split.title">Split PDFs</h3><p data-i18n="feat.split.desc">Extract specific pages or type a range like "1-10, 25, 30-45". Visual selection with thumbnails. Split by range or pick individual pages.</p></div>
+    <div class="feature-card"><span class="icon">📐</span><h3 data-i18n="feat.org.title">Organize Pages</h3><p data-i18n="feat.org.desc">All your pages as thumbnails. Drag to reorder, rotate, or delete. Full undo support — change your mind anytime.</p></div>
+    <div class="feature-card"><span class="icon">📦</span><h3 data-i18n="feat.comp.title">Real Compression</h3><p data-i18n="feat.comp.desc">Not "remove metadata" compression. PDF Kit resamples images at the resolution you choose. 122 MB → 27 MB. Three presets: email, office, print.</p></div>
+    <div class="feature-card"><span class="icon">🖨️</span><h3 data-i18n="feat.print.title">Batch Print</h3><p data-i18n="feat.print.desc">Drag 20 PDFs and print them all with one click. A cover page between each document shows the filename for instant sorting from the paper stack.</p></div>
+    <div class="feature-card"><span class="icon">🖍️</span><h3 data-i18n="feat.hl.title">Highlight Text</h3><p data-i18n="feat.hl.desc">Smooth marker that follows your cursor across lines — just like a real highlighter. Four colors. Saved as standard PDF annotations visible in any viewer.</p></div>
+    <div class="feature-card"><span class="icon">✏️</span><h3 data-i18n="feat.text.title">Add Text</h3><p data-i18n="feat.text.desc">Click anywhere to place a note, label, or comment. Choose font size and color. No need to open a full editor for a quick annotation.</p></div>
+    <div class="feature-card"><span class="icon">🖼️</span><h3 data-i18n="feat.export.title">Export to Images</h3><p data-i18n="feat.export.desc">Save any page as PNG or JPG. Choose 72, 150, or 300 DPI. Export all pages, current page, or a custom range.</p></div>
   </div>
 </section>
 
 <!-- SCREENSHOTS SHOWCASE -->
 <section id="showcase">
   <div class="section-header">
-    <h2 class="lang-en">See it in action.</h2>
-    <h2 class="lang-es">Míralo en acción.</h2>
-    <p class="lang-en">Real screenshots from PDF Kit. What you see is what you get.</p>
-    <p class="lang-es">Capturas reales de PDF Kit. Lo que ves es lo que obtienes.</p>
+    <h2 data-i18n="show.header">See it in action.</h2>
+    <p data-i18n="show.sub">Real screenshots from PDF Kit. What you see is what you get.</p>
   </div>
 
   <div class="screenshots">
     <div class="screenshot-row">
       <img src="Pantalla merge.png" alt="Merge PDFs">
       <div class="screenshot-text">
-        <h3 class="lang-en">Merge PDFs & Images</h3>
-        <h3 class="lang-es">Unir PDFs e Imágenes</h3>
-        <p class="lang-en">Drag in multiple PDFs or images and combine them into one document. Visual page thumbnails let you see exactly what you're merging before you commit.</p>
-        <p class="lang-es">Arrastra múltiples PDFs o imágenes y combínalos en un solo documento. Las miniaturas te permiten ver exactamente lo que estás uniendo antes de confirmar.</p>
+        <h3 data-i18n="show.merge.title">Merge PDFs & Images</h3>
+        <p data-i18n="show.merge.desc">Drag in multiple PDFs or images and combine them into one document. Visual page thumbnails let you see exactly what you're merging before you commit.</p>
       </div>
     </div>
 
     <div class="screenshot-row reverse">
       <img src="pantalla split.png" alt="Split PDF">
       <div class="screenshot-text">
-        <h3 class="lang-en">Split with Precision</h3>
-        <h3 class="lang-es">Divide con Precisión</h3>
-        <p class="lang-en">Select individual pages or type a range. Visual thumbnails with color-coded selections make it easy to extract exactly the pages you need.</p>
-        <p class="lang-es">Selecciona páginas individuales o escribe un rango. Miniaturas visuales con selecciones codificadas por color hacen fácil extraer exactamente las páginas que necesitas.</p>
+        <h3 data-i18n="show.split.title">Split with Precision</h3>
+        <p data-i18n="show.split.desc">Select individual pages or type a range. Visual thumbnails with color-coded selections make it easy to extract exactly the pages you need.</p>
       </div>
     </div>
 
     <div class="screenshot-row">
       <img src="pantalla organizar.png" alt="Organize Pages">
       <div class="screenshot-text">
-        <h3 class="lang-en">Organize & Reorder</h3>
-        <h3 class="lang-es">Organiza y Reordena</h3>
-        <p class="lang-en">See all pages as thumbnails. Drag to reorder, rotate, or delete. Full undo support so you can experiment freely without worry.</p>
-        <p class="lang-es">Ve todas las páginas como miniaturas. Arrastra para reordenar, rota o elimina. Soporte completo de deshacer para experimentar libremente.</p>
+        <h3 data-i18n="show.org.title">Organize & Reorder</h3>
+        <p data-i18n="show.org.desc">See all pages as thumbnails. Drag to reorder, rotate, or delete. Full undo support so you can experiment freely without worry.</p>
       </div>
     </div>
 
     <div class="screenshot-row reverse">
       <img src="Pantalla Compress PDF.png" alt="Compress PDF">
       <div class="screenshot-text">
-        <h3 class="lang-en">Real Compression</h3>
-        <h3 class="lang-es">Compresión Real</h3>
-        <p class="lang-en">Not just metadata stripping. PDF Kit resamples images at the DPI you choose. Three presets for email, office, or print — with instant before/after comparison.</p>
-        <p class="lang-es">No solo elimina metadatos. PDF Kit remuestrea imágenes al DPI que elijas. Tres presets para correo, oficina o impresión — con comparación instantánea antes/después.</p>
+        <h3 data-i18n="show.comp.title">Real Compression</h3>
+        <p data-i18n="show.comp.desc">Not just metadata stripping. PDF Kit resamples images at the DPI you choose. Three presets for email, office, or print — with instant before/after comparison.</p>
       </div>
     </div>
 
     <div class="screenshot-row">
       <img src="PDF viewer-add text.png" alt="View and annotate PDFs">
       <div class="screenshot-text">
-        <h3 class="lang-en">View & Add Text</h3>
-        <h3 class="lang-es">Ver y Agregar Texto</h3>
-        <p class="lang-en">A full PDF viewer with smooth scrolling, zoom, and page navigation. Click anywhere to add text annotations — no need for a heavy editor.</p>
-        <p class="lang-es">Un visor PDF completo con desplazamiento suave, zoom y navegación de páginas. Haz clic en cualquier parte para agregar anotaciones de texto.</p>
+        <h3 data-i18n="show.view.title">View & Add Text</h3>
+        <p data-i18n="show.view.desc">A full PDF viewer with smooth scrolling, zoom, and page navigation. Click anywhere to add text annotations — no need for a heavy editor.</p>
       </div>
     </div>
 
     <div class="screenshot-row reverse">
       <img src="Imprimir en multiples PDF.png" alt="Batch print">
       <div class="screenshot-text">
-        <h3 class="lang-en">Batch Print</h3>
-        <h3 class="lang-es">Impresión en Lote</h3>
-        <p class="lang-en">Load multiple PDFs and print them all at once. Automatic cover pages between documents show the filename, making it easy to sort from the paper stack.</p>
-        <p class="lang-es">Carga múltiples PDFs e imprímelos todos de una vez. Portadas automáticas entre documentos muestran el nombre del archivo para separar fácilmente.</p>
+        <h3 data-i18n="show.print.title">Batch Print</h3>
+        <p data-i18n="show.print.desc">Load multiple PDFs and print them all at once. Automatic cover pages between documents show the filename, making it easy to sort from the paper stack.</p>
       </div>
     </div>
   </div>
@@ -566,22 +481,14 @@ footer a:hover { color: var(--orange); }
 <!-- PRIVACY -->
 <section>
   <div class="privacy-banner">
-    <h2 class="lang-en">Your documents never leave your PC.</h2>
-    <h2 class="lang-es">Tus documentos nunca salen de tu PC.</h2>
-    <p class="lang-en">
-      While online PDF tools send your contracts, tax returns, and medical records through their servers, 
-      PDF Kit processes everything locally. Privacy as a feature, not a promise.
-    </p>
-    <p class="lang-es">
-      Mientras las herramientas en línea envían tus contratos, declaraciones de impuestos y expedientes médicos 
-      a través de sus servidores, PDF Kit procesa todo localmente. Privacidad como función, no como promesa.
-    </p>
+    <h2 data-i18n="priv.header">Your documents never leave your PC.</h2>
+    <p data-i18n="priv.text">While online PDF tools send your contracts, tax returns, and medical records through their servers, PDF Kit processes everything locally. Privacy as a feature, not a promise.</p>
     <div class="privacy-tags">
-      <span class="lang-en">No telemetry</span><span class="lang-es">Sin telemetría</span>
-      <span class="lang-en">No cloud</span><span class="lang-es">Sin nube</span>
-      <span class="lang-en">No account</span><span class="lang-es">Sin cuenta</span>
-      <span class="lang-en">Works offline</span><span class="lang-es">Funciona offline</span>
-      <span class="lang-en">No ads. Ever.</span><span class="lang-es">Sin publicidad. Nunca.</span>
+      <span data-i18n="priv.tag1">No telemetry</span>
+      <span data-i18n="priv.tag2">No cloud</span>
+      <span data-i18n="priv.tag3">No account</span>
+      <span data-i18n="priv.tag4">Works offline</span>
+      <span data-i18n="priv.tag5">No ads. Ever.</span>
     </div>
   </div>
 </section>
@@ -589,32 +496,27 @@ footer a:hover { color: var(--orange); }
 <!-- PRICING -->
 <section id="pricing">
   <div class="section-header">
-    <h2 class="lang-en">One purchase. Forever yours.</h2>
-    <h2 class="lang-es">Una compra. Para siempre.</h2>
-    <p class="lang-en">Every feature included. No tiers, no upsells, no tricks.</p>
-    <p class="lang-es">Todas las funciones incluidas. Sin niveles, sin ventas adicionales.</p>
+    <h2 data-i18n="price.header">One purchase. Forever yours.</h2>
+    <p data-i18n="price.sub">Every feature included. No tiers, no upsells, no tricks.</p>
   </div>
   <div class="pricing-grid">
     <div class="price-card">
-      <h3>PDF Kit</h3>
-      <p class="price lang-en">One-time purchase on Microsoft Store</p>
-      <p class="price lang-es">Pago único en Microsoft Store</p>
-      <p class="price-note lang-en">No subscription. No recurring charges. Pay once.</p>
-      <p class="price-note lang-es">Sin suscripción. Sin cargos recurrentes. Paga una vez.</p>
+      <h3 data-i18n="price.title">PDF Kit</h3>
+      <p class="price" data-i18n="price.note">One-time purchase on Microsoft Store</p>
+      <p class="price-note" data-i18n="price.subnote">No subscription. No recurring charges. Pay once.</p>
       <ul>
-        <li class="lang-en">View, merge, split, organize, compress PDFs</li><li class="lang-es">Ver, unir, dividir, organizar, comprimir PDFs</li>
-        <li class="lang-en">Batch print with automatic cover pages</li><li class="lang-es">Impresión en lote con portadas automáticas</li>
-        <li class="lang-en">Highlight text with 4 colors</li><li class="lang-es">Resaltar texto con 4 colores</li>
-        <li class="lang-en">Add text annotations anywhere</li><li class="lang-es">Agregar texto en cualquier parte</li>
-        <li class="lang-en">Export pages as PNG/JPG images</li><li class="lang-es">Exportar páginas como imágenes PNG/JPG</li>
-        <li class="lang-en">Real compression with image downsampling</li><li class="lang-es">Compresión real con reducción de imágenes</li>
-        <li class="lang-en">Import images: JPG, PNG, WebP, TIFF, BMP, GIF</li><li class="lang-es">Importar imágenes: JPG, PNG, WebP, TIFF, BMP, GIF</li>
-        <li class="lang-en">100% private — files never leave your PC</li><li class="lang-es">100% privado — archivos nunca salen de tu PC</li>
-        <li class="lang-en">30 languages supported</li><li class="lang-es">30 idiomas soportados</li>
-        <li class="lang-en">All future updates included</li><li class="lang-es">Todas las actualizaciones futuras incluidas</li>
+        <li data-i18n="price.li1">View, merge, split, organize, compress PDFs</li>
+        <li data-i18n="price.li2">Batch print with automatic cover pages</li>
+        <li data-i18n="price.li3">Highlight text with 4 colors</li>
+        <li data-i18n="price.li4">Add text annotations anywhere</li>
+        <li data-i18n="price.li5">Export pages as PNG/JPG images</li>
+        <li data-i18n="price.li6">Real compression with image downsampling</li>
+        <li data-i18n="price.li7">Import images: JPG, PNG, WebP, TIFF, BMP, GIF</li>
+        <li data-i18n="price.li8">100% private — files never leave your PC</li>
+        <li data-i18n="price.li9">30 languages supported</li>
+        <li data-i18n="price.li10">All future updates included</li>
       </ul>
-      <a href="https://apps.microsoft.com/detail/9P9R7V8C5BMZ" class="btn-primary lang-en">Get PDF Kit</a>
-      <a href="https://apps.microsoft.com/detail/9P9R7V8C5BMZ" class="btn-primary lang-es">Obtener PDF Kit</a>
+      <a href="https://apps.microsoft.com/detail/9P9R7V8C5BMZ" class="btn-primary" data-i18n="price.cta">Get PDF Kit</a>
     </div>
   </div>
 </section>
@@ -622,71 +524,93 @@ footer a:hover { color: var(--orange); }
 <!-- FAQ -->
 <section>
   <div class="section-header">
-    <h2 class="lang-en">Common questions</h2>
-    <h2 class="lang-es">Preguntas frecuentes</h2>
+    <h2 data-i18n="faq.header">Common questions</h2>
   </div>
   <div class="faq-list">
     <div class="faq-item" onclick="this.classList.toggle('open')">
-      <div class="faq-q"><span class="lang-en">Is PDF Kit a subscription?</span><span class="lang-es">¿PDF Kit es una suscripción?</span></div>
-      <div class="faq-a"><span class="lang-en">No. PDF Kit is a one-time purchase from the Microsoft Store. Pay once and it's yours forever, including all future updates within the same major version.</span><span class="lang-es">No. PDF Kit es un pago único en la Microsoft Store. Paga una vez y es tuyo para siempre, incluyendo todas las actualizaciones futuras dentro de la misma versión.</span></div>
+      <div class="faq-q"><span data-i18n="faq.q1">Is PDF Kit a subscription?</span></div>
+      <div class="faq-a"><span data-i18n="faq.a1">No. PDF Kit is a one-time purchase from the Microsoft Store. Pay once and it's yours forever, including all future updates within the same major version.</span></div>
     </div>
     <div class="faq-item" onclick="this.classList.toggle('open')">
-      <div class="faq-q"><span class="lang-en">Does PDF Kit upload my files anywhere?</span><span class="lang-es">¿PDF Kit sube mis archivos a algún lado?</span></div>
-      <div class="faq-a"><span class="lang-en">Never. All processing happens locally on your PC. No cloud, no uploads, no account required. Your contracts, tax returns, and personal documents stay completely private.</span><span class="lang-es">Nunca. Todo el procesamiento ocurre localmente en tu PC. Sin nube, sin subidas, sin cuenta requerida. Tus contratos, declaraciones de impuestos y documentos personales se quedan completamente privados.</span></div>
+      <div class="faq-q"><span data-i18n="faq.q2">Does PDF Kit upload my files anywhere?</span></div>
+      <div class="faq-a"><span data-i18n="faq.a2">Never. All processing happens locally on your PC. No cloud, no uploads, no account required. Your contracts, tax returns, and personal documents stay completely private.</span></div>
     </div>
     <div class="faq-item" onclick="this.classList.toggle('open')">
-      <div class="faq-q"><span class="lang-en">Can I highlight text and see it in other PDF readers?</span><span class="lang-es">¿Puedo resaltar texto y verlo en otros lectores PDF?</span></div>
-      <div class="faq-a"><span class="lang-en">Yes. Highlights are saved as standard PDF annotations. They're visible in Microsoft Edge, Adobe Acrobat Reader, Chrome, and any other PDF viewer that supports the PDF standard.</span><span class="lang-es">Sí. Los resaltados se guardan como anotaciones PDF estándar. Son visibles en Microsoft Edge, Adobe Acrobat Reader, Chrome y cualquier otro visor PDF que soporte el estándar PDF.</span></div>
+      <div class="faq-q"><span data-i18n="faq.q3">Can I highlight text and see it in other PDF readers?</span></div>
+      <div class="faq-a"><span data-i18n="faq.a3">Yes. Highlights are saved as standard PDF annotations. They're visible in Microsoft Edge, Adobe Acrobat Reader, Chrome, and any other PDF viewer that supports the PDF standard.</span></div>
     </div>
     <div class="faq-item" onclick="this.classList.toggle('open')">
-      <div class="faq-q"><span class="lang-en">What makes the compression different?</span><span class="lang-es">¿Qué hace diferente la compresión?</span></div>
-      <div class="faq-a"><span class="lang-en">Most free tools only strip metadata or apply basic deflation. PDF Kit actually resamples images inside the PDF at the DPI you choose (72, 150, or 300). A 122 MB file becomes 27 MB — 78% smaller — with quality you can control.</span><span class="lang-es">La mayoría de las herramientas gratuitas solo eliminan metadatos o aplican deflación básica. PDF Kit remuestrea las imágenes dentro del PDF al DPI que elijas (72, 150 o 300). Un archivo de 122 MB se convierte en 27 MB — 78% más pequeño — con calidad que puedes controlar.</span></div>
+      <div class="faq-q"><span data-i18n="faq.q4">What makes the compression different?</span></div>
+      <div class="faq-a"><span data-i18n="faq.a4">Most free tools only strip metadata or apply basic deflation. PDF Kit actually resamples images inside the PDF at the DPI you choose (72, 150, or 300). A 122 MB file becomes 27 MB — 78% smaller — with quality you can control.</span></div>
     </div>
     <div class="faq-item" onclick="this.classList.toggle('open')">
-      <div class="faq-q"><span class="lang-en">Does it work offline?</span><span class="lang-es">¿Funciona sin internet?</span></div>
-      <div class="faq-a"><span class="lang-en">Yes. PDF Kit works 100% offline. The only network call is Microsoft Store license verification, which is handled by Windows — not by our app.</span><span class="lang-es">Sí. PDF Kit funciona 100% sin internet. La única llamada de red es la verificación de licencia de Microsoft Store, que es manejada por Windows — no por nuestra app.</span></div>
+      <div class="faq-q"><span data-i18n="faq.q5">Does it work offline?</span></div>
+      <div class="faq-a"><span data-i18n="faq.a5">Yes. PDF Kit works 100% offline. The only network call is Microsoft Store license verification, which is handled by Windows — not by our app.</span></div>
     </div>
   </div>
 </section>
 
 <!-- CTA -->
 <section class="cta-section">
-  <h2 class="lang-en">Ready to own your PDF toolkit?</h2>
-  <h2 class="lang-es">¿Listo para tener tu kit de herramientas PDF?</h2>
-  <p class="lang-en">One-time purchase on the Microsoft Store. No account, no cloud, no subscription.</p>
-  <p class="lang-es">Pago único en la Microsoft Store. Sin cuenta, sin nube, sin suscripción.</p>
-  <a href="https://apps.microsoft.com/detail/9P9R7V8C5BMZ" class="btn-primary lang-en">Get PDF Kit — Microsoft Store</a>
-  <a href="https://apps.microsoft.com/detail/9P9R7V8C5BMZ" class="btn-primary lang-es">Obtener PDF Kit — Microsoft Store</a>
+  <h2 data-i18n="cta.header">Ready to own your PDF toolkit?</h2>
+  <p data-i18n="cta.sub">One-time purchase on the Microsoft Store. No account, no cloud, no subscription.</p>
+  <a href="https://apps.microsoft.com/detail/9P9R7V8C5BMZ" class="btn-primary" data-i18n="cta.btn">Get PDF Kit — Microsoft Store</a>
 </section>
 
 <!-- FOOTER -->
 <footer>
-  <p>
-    <span class="lang-en">PDF Kit — Haven Tech · Built for Windows · Private by design</span>
-    <span class="lang-es">PDF Kit — Haven Tech · Hecho para Windows · Privado por diseño</span>
-  </p>
+  <p data-i18n="foot.tag">PDF Kit — Haven Tech · Built for Windows · Private by design</p>
   <p style="margin-top: 0.75rem;">
     <a href="https://apps.microsoft.com/detail/9P9R7V8C5BMZ">Microsoft Store</a>
-    <a href="https://cesarlugom.github.io/haven-software-legal/">
-      <span class="lang-en">Privacy Policy</span><span class="lang-es">Política de Privacidad</span>
-    </a>
-    <a href="mailto:cesarlugom@outlook.com">
-      <span class="lang-en">Contact</span><span class="lang-es">Contacto</span>
-    </a>
+    <a href="https://cesarlugom.github.io/haven-software-legal/" data-i18n="foot.privacy">Privacy Policy</a>
+    <a href="mailto:cesarlugom@outlook.com" data-i18n="foot.contact">Contact</a>
   </p>
   <p style="margin-top: 0.75rem;">
-    <span class="lang-en">Also by Haven Tech:</span><span class="lang-es">También de Haven Tech:</span>
+    <span data-i18n="foot.related">Also by Haven Tech:</span>
     <a href="https://cesarlugom.github.io/Haven-Intelligent-Cleanup/">Intelligent Cleanup</a>
   </p>
 </footer>
 
 <script>
-// Headline translations — 30 languages
+// === LANGUAGE LIST (30 languages, native names) ===
+const LANGS = [
+  {code:'en',    name:'English'},
+  {code:'es',    name:'Español'},
+  {code:'pt-BR', name:'Português'},
+  {code:'fr',    name:'Français'},
+  {code:'de',    name:'Deutsch'},
+  {code:'it',    name:'Italiano'},
+  {code:'ja',    name:'日本語'},
+  {code:'zh-CN', name:'简体中文'},
+  {code:'ko',    name:'한국어'},
+  {code:'ru',    name:'Русский'},
+  {code:'nl',    name:'Nederlands'},
+  {code:'pl',    name:'Polski'},
+  {code:'tr',    name:'Türkçe'},
+  {code:'zh-TW', name:'繁體中文'},
+  {code:'ar',    name:'العربية'},
+  {code:'hi',    name:'हिन्दी'},
+  {code:'id',    name:'Bahasa Indonesia'},
+  {code:'vi',    name:'Tiếng Việt'},
+  {code:'th',    name:'ไทย'},
+  {code:'uk',    name:'Українська'},
+  {code:'cs',    name:'Čeština'},
+  {code:'sv',    name:'Svenska'},
+  {code:'ro',    name:'Română'},
+  {code:'hu',    name:'Magyar'},
+  {code:'el',    name:'Ελληνικά'},
+  {code:'da',    name:'Dansk'},
+  {code:'nb',    name:'Norsk'},
+  {code:'fi',    name:'Suomi'},
+  {code:'ms',    name:'Bahasa Melayu'},
+  {code:'fil',   name:'Filipino'}
+];
+
+// Headlines for all 30 languages (localized for every supported browser)
 const HEADLINES = {
   'en':    'All your PDFs. <span class="accent">Always on your PC.</span>',
   'es':    'Todos tus PDFs. <span class="accent">Siempre en tu equipo.</span>',
   'pt-BR': 'Todos os seus PDFs. <span class="accent">Sempre no seu PC.</span>',
-  'pt':    'Todos os seus PDFs. <span class="accent">Sempre no seu PC.</span>',
   'fr':    'Tous vos PDF. <span class="accent">Toujours sur votre PC.</span>',
   'de':    'Alle Ihre PDFs. <span class="accent">Immer auf Ihrem PC.</span>',
   'it':    'Tutti i tuoi PDF. <span class="accent">Sempre sul tuo PC.</span>',
@@ -711,57 +635,470 @@ const HEADLINES = {
   'el':    'Όλα τα PDF σου. <span class="accent">Πάντα στον υπολογιστή σου.</span>',
   'da':    "Alle dine PDF'er. <span class=\"accent\">Altid på din pc.</span>",
   'nb':    'Alle PDF-ene dine. <span class="accent">Alltid på din PC.</span>',
-  'no':    'Alle PDF-ene dine. <span class="accent">Alltid på din PC.</span>',
   'fi':    'Kaikki PDF-tiedostosi. <span class="accent">Aina omalla tietokoneellasi.</span>',
   'ms':    'Semua PDF anda. <span class="accent">Sentiasa di PC anda.</span>',
-  'fil':   'Lahat ng PDF mo. <span class="accent">Palaging nasa PC mo.</span>',
-  'tl':    'Lahat ng PDF mo. <span class="accent">Palaging nasa PC mo.</span>'
+  'fil':   'Lahat ng PDF mo. <span class="accent">Palaging nasa PC mo.</span>'
 };
 
-// RTL languages
+// === FULL TRANSLATIONS for top 10 languages ===
+const T = {
+  'en': {
+    'nav.features':'Features','nav.showcase':'Screenshots','nav.pricing':'Pricing','nav.privacy':'Privacy',
+    'hero.badge':'Live on Microsoft Store',
+    'hero.headline': HEADLINES['en'],
+    'hero.sub':"Merge, split, organize, compress, highlight, print, and add text to any PDF. One-time purchase. Every feature included. Your files never leave your PC.",
+    'hero.cta':'Get PDF Kit — Microsoft Store',
+    'hero.meta':'Nothing leaves your PC · No account · No subscription · 30 languages',
+    'features.header':"Everything you need. Nothing you don't.",
+    'features.sub':'The tools that matter, built for speed and privacy.',
+    'feat.view.title':'View PDFs','feat.view.desc':"Smooth scrolling, zoom, text search, and keyboard shortcuts. Rendered with the same engine behind the world's most popular browser.",
+    'feat.merge.title':'Merge Files & Images','feat.merge.desc':'Combine PDFs and images into one document. Drag in JPG, PNG, WebP, TIFF, BMP, or GIF — they become pages instantly. No conversion step.',
+    'feat.split.title':'Split PDFs','feat.split.desc':'Extract specific pages or type a range like "1-10, 25, 30-45". Visual selection with thumbnails. Split by range or pick individual pages.',
+    'feat.org.title':'Organize Pages','feat.org.desc':'All your pages as thumbnails. Drag to reorder, rotate, or delete. Full undo support — change your mind anytime.',
+    'feat.comp.title':'Real Compression','feat.comp.desc':'Not "remove metadata" compression. PDF Kit resamples images at the resolution you choose. 122 MB → 27 MB. Three presets: email, office, print.',
+    'feat.print.title':'Batch Print','feat.print.desc':'Drag 20 PDFs and print them all with one click. A cover page between each document shows the filename for instant sorting from the paper stack.',
+    'feat.hl.title':'Highlight Text','feat.hl.desc':'Smooth marker that follows your cursor across lines — just like a real highlighter. Four colors. Saved as standard PDF annotations visible in any viewer.',
+    'feat.text.title':'Add Text','feat.text.desc':'Click anywhere to place a note, label, or comment. Choose font size and color. No need to open a full editor for a quick annotation.',
+    'feat.export.title':'Export to Images','feat.export.desc':'Save any page as PNG or JPG. Choose 72, 150, or 300 DPI. Export all pages, current page, or a custom range.',
+    'show.header':'See it in action.','show.sub':'Real screenshots from PDF Kit. What you see is what you get.',
+    'show.merge.title':'Merge PDFs & Images','show.merge.desc':"Drag in multiple PDFs or images and combine them into one document. Visual page thumbnails let you see exactly what you're merging before you commit.",
+    'show.split.title':'Split with Precision','show.split.desc':'Select individual pages or type a range. Visual thumbnails with color-coded selections make it easy to extract exactly the pages you need.',
+    'show.org.title':'Organize & Reorder','show.org.desc':'See all pages as thumbnails. Drag to reorder, rotate, or delete. Full undo support so you can experiment freely without worry.',
+    'show.comp.title':'Real Compression','show.comp.desc':'Not just metadata stripping. PDF Kit resamples images at the DPI you choose. Three presets for email, office, or print — with instant before/after comparison.',
+    'show.view.title':'View & Add Text','show.view.desc':'A full PDF viewer with smooth scrolling, zoom, and page navigation. Click anywhere to add text annotations — no need for a heavy editor.',
+    'show.print.title':'Batch Print','show.print.desc':'Load multiple PDFs and print them all at once. Automatic cover pages between documents show the filename, making it easy to sort from the paper stack.',
+    'priv.header':'Your documents never leave your PC.',
+    'priv.text':'While online PDF tools send your contracts, tax returns, and medical records through their servers, PDF Kit processes everything locally. Privacy as a feature, not a promise.',
+    'priv.tag1':'No telemetry','priv.tag2':'No cloud','priv.tag3':'No account','priv.tag4':'Works offline','priv.tag5':'No ads. Ever.',
+    'price.header':'One purchase. Forever yours.','price.sub':'Every feature included. No tiers, no upsells, no tricks.',
+    'price.title':'PDF Kit','price.note':'One-time purchase on Microsoft Store','price.subnote':'No subscription. No recurring charges. Pay once.',
+    'price.li1':'View, merge, split, organize, compress PDFs','price.li2':'Batch print with automatic cover pages','price.li3':'Highlight text with 4 colors','price.li4':'Add text annotations anywhere','price.li5':'Export pages as PNG/JPG images','price.li6':'Real compression with image downsampling','price.li7':'Import images: JPG, PNG, WebP, TIFF, BMP, GIF','price.li8':'100% private — files never leave your PC','price.li9':'30 languages supported','price.li10':'All future updates included','price.cta':'Get PDF Kit',
+    'faq.header':'Common questions',
+    'faq.q1':'Is PDF Kit a subscription?','faq.a1':"No. PDF Kit is a one-time purchase from the Microsoft Store. Pay once and it's yours forever, including all future updates within the same major version.",
+    'faq.q2':'Does PDF Kit upload my files anywhere?','faq.a2':'Never. All processing happens locally on your PC. No cloud, no uploads, no account required. Your contracts, tax returns, and personal documents stay completely private.',
+    'faq.q3':'Can I highlight text and see it in other PDF readers?','faq.a3':"Yes. Highlights are saved as standard PDF annotations. They're visible in Microsoft Edge, Adobe Acrobat Reader, Chrome, and any other PDF viewer that supports the PDF standard.",
+    'faq.q4':'What makes the compression different?','faq.a4':'Most free tools only strip metadata or apply basic deflation. PDF Kit actually resamples images inside the PDF at the DPI you choose (72, 150, or 300). A 122 MB file becomes 27 MB — 78% smaller — with quality you can control.',
+    'faq.q5':'Does it work offline?','faq.a5':'Yes. PDF Kit works 100% offline. The only network call is Microsoft Store license verification, which is handled by Windows — not by our app.',
+    'cta.header':'Ready to own your PDF toolkit?','cta.sub':'One-time purchase on the Microsoft Store. No account, no cloud, no subscription.','cta.btn':'Get PDF Kit — Microsoft Store',
+    'foot.tag':'PDF Kit — Haven Tech · Built for Windows · Private by design','foot.privacy':'Privacy Policy','foot.contact':'Contact','foot.related':'Also by Haven Tech:'
+  },
+  'es': {
+    'nav.features':'Funciones','nav.showcase':'Capturas','nav.pricing':'Precio','nav.privacy':'Privacidad',
+    'hero.badge':'Disponible en Microsoft Store',
+    'hero.headline': HEADLINES['es'],
+    'hero.sub':'Une, divide, organiza, comprime, resalta, imprime y agrega texto a cualquier PDF. Pago único. Todas las funciones incluidas. Tus archivos nunca salen de tu PC.',
+    'hero.cta':'Obtener PDF Kit — Microsoft Store',
+    'hero.meta':'Nada sale de tu PC · Sin cuenta · Sin suscripción · 30 idiomas',
+    'features.header':'Todo lo que necesitas. Nada que no.',
+    'features.sub':'Las herramientas que importan, hechas para velocidad y privacidad.',
+    'feat.view.title':'Ver PDFs','feat.view.desc':'Desplazamiento suave, zoom, búsqueda de texto y atajos de teclado. Renderizado con el mismo motor del navegador más popular del mundo.',
+    'feat.merge.title':'Unir Archivos e Imágenes','feat.merge.desc':'Combina PDFs e imágenes en un solo documento. Arrastra JPG, PNG, WebP, TIFF, BMP o GIF — se convierten en páginas al instante. Sin paso de conversión.',
+    'feat.split.title':'Dividir PDFs','feat.split.desc':'Extrae páginas específicas o escribe un rango como "1-10, 25, 30-45". Selección visual con miniaturas. Divide por rango o selecciona páginas individuales.',
+    'feat.org.title':'Organizar Páginas','feat.org.desc':'Todas tus páginas como miniaturas. Arrastra para reordenar, rota o elimina. Soporte completo de deshacer — cambia de opinión cuando quieras.',
+    'feat.comp.title':'Compresión Real','feat.comp.desc':'No es "quitar metadatos". PDF Kit remuestrea las imágenes a la resolución que elijas. 122 MB → 27 MB. Tres niveles: correo, oficina, impresión.',
+    'feat.print.title':'Impresión en Lote','feat.print.desc':'Arrastra 20 PDFs e imprímelos todos con un clic. Una portada entre cada documento muestra el nombre del archivo para separar al instante desde la pila.',
+    'feat.hl.title':'Resaltar Texto','feat.hl.desc':'Marcador suave que sigue tu cursor entre líneas — como un marcatextos real. Cuatro colores. Guardado como anotación PDF estándar visible en cualquier visor.',
+    'feat.text.title':'Agregar Texto','feat.text.desc':'Haz clic en cualquier parte para colocar una nota, etiqueta o comentario. Elige tamaño y color de fuente. Sin abrir un editor completo para una anotación rápida.',
+    'feat.export.title':'Exportar a Imágenes','feat.export.desc':'Guarda cualquier página como PNG o JPG. Elige 72, 150 o 300 DPI. Exporta todas las páginas, la actual o un rango personalizado.',
+    'show.header':'Míralo en acción.','show.sub':'Capturas reales de PDF Kit. Lo que ves es lo que obtienes.',
+    'show.merge.title':'Unir PDFs e Imágenes','show.merge.desc':'Arrastra múltiples PDFs o imágenes y combínalos en un solo documento. Las miniaturas visuales te permiten ver exactamente lo que estás uniendo antes de confirmar.',
+    'show.split.title':'Divide con Precisión','show.split.desc':'Selecciona páginas individuales o escribe un rango. Miniaturas visuales con selecciones codificadas por color para extraer exactamente las páginas que necesitas.',
+    'show.org.title':'Organiza y Reordena','show.org.desc':'Ve todas las páginas como miniaturas. Arrastra para reordenar, rota o elimina. Soporte completo de deshacer para experimentar libremente sin preocupación.',
+    'show.comp.title':'Compresión Real','show.comp.desc':'No solo elimina metadatos. PDF Kit remuestrea imágenes al DPI que elijas. Tres presets para correo, oficina o impresión — con comparación instantánea antes/después.',
+    'show.view.title':'Ver y Agregar Texto','show.view.desc':'Un visor PDF completo con desplazamiento suave, zoom y navegación de páginas. Haz clic en cualquier parte para agregar anotaciones de texto — sin editor pesado.',
+    'show.print.title':'Impresión en Lote','show.print.desc':'Carga múltiples PDFs e imprímelos todos de una vez. Portadas automáticas entre documentos muestran el nombre del archivo para separar fácilmente.',
+    'priv.header':'Tus documentos nunca salen de tu PC.',
+    'priv.text':'Mientras las herramientas en línea envían tus contratos, declaraciones de impuestos y expedientes médicos a través de sus servidores, PDF Kit procesa todo localmente. Privacidad como función, no como promesa.',
+    'priv.tag1':'Sin telemetría','priv.tag2':'Sin nube','priv.tag3':'Sin cuenta','priv.tag4':'Funciona offline','priv.tag5':'Sin publicidad. Nunca.',
+    'price.header':'Una compra. Para siempre.','price.sub':'Todas las funciones incluidas. Sin niveles, sin ventas adicionales, sin trucos.',
+    'price.title':'PDF Kit','price.note':'Pago único en Microsoft Store','price.subnote':'Sin suscripción. Sin cargos recurrentes. Paga una vez.',
+    'price.li1':'Ver, unir, dividir, organizar, comprimir PDFs','price.li2':'Impresión en lote con portadas automáticas','price.li3':'Resaltar texto con 4 colores','price.li4':'Agregar texto en cualquier parte','price.li5':'Exportar páginas como imágenes PNG/JPG','price.li6':'Compresión real con reducción de imágenes','price.li7':'Importar imágenes: JPG, PNG, WebP, TIFF, BMP, GIF','price.li8':'100% privado — archivos nunca salen de tu PC','price.li9':'30 idiomas soportados','price.li10':'Todas las actualizaciones futuras incluidas','price.cta':'Obtener PDF Kit',
+    'faq.header':'Preguntas frecuentes',
+    'faq.q1':'¿PDF Kit es una suscripción?','faq.a1':'No. PDF Kit es un pago único en la Microsoft Store. Paga una vez y es tuyo para siempre, incluyendo todas las actualizaciones futuras dentro de la misma versión mayor.',
+    'faq.q2':'¿PDF Kit sube mis archivos a algún lado?','faq.a2':'Nunca. Todo el procesamiento ocurre localmente en tu PC. Sin nube, sin subidas, sin cuenta requerida. Tus contratos, declaraciones y documentos personales se quedan completamente privados.',
+    'faq.q3':'¿Puedo resaltar texto y verlo en otros lectores PDF?','faq.a3':'Sí. Los resaltados se guardan como anotaciones PDF estándar. Son visibles en Microsoft Edge, Adobe Acrobat Reader, Chrome y cualquier otro visor PDF que soporte el estándar.',
+    'faq.q4':'¿Qué hace diferente la compresión?','faq.a4':'La mayoría de las herramientas gratuitas solo eliminan metadatos o aplican deflación básica. PDF Kit remuestrea las imágenes dentro del PDF al DPI que elijas (72, 150 o 300). Un archivo de 122 MB se convierte en 27 MB — 78% más pequeño — con calidad que puedes controlar.',
+    'faq.q5':'¿Funciona sin internet?','faq.a5':'Sí. PDF Kit funciona 100% sin internet. La única llamada de red es la verificación de licencia de Microsoft Store, que es manejada por Windows — no por nuestra app.',
+    'cta.header':'¿Listo para tener tu kit de herramientas PDF?','cta.sub':'Pago único en la Microsoft Store. Sin cuenta, sin nube, sin suscripción.','cta.btn':'Obtener PDF Kit — Microsoft Store',
+    'foot.tag':'PDF Kit — Haven Tech · Hecho para Windows · Privado por diseño','foot.privacy':'Política de Privacidad','foot.contact':'Contacto','foot.related':'También de Haven Tech:'
+  },
+  'pt-BR': {
+    'nav.features':'Recursos','nav.showcase':'Capturas','nav.pricing':'Preço','nav.privacy':'Privacidade',
+    'hero.badge':'Disponível na Microsoft Store',
+    'hero.headline': HEADLINES['pt-BR'],
+    'hero.sub':'Una, divida, organize, comprima, destaque, imprima e adicione texto a qualquer PDF. Pagamento único. Todos os recursos incluídos. Seus arquivos nunca saem do seu PC.',
+    'hero.cta':'Obter PDF Kit — Microsoft Store',
+    'hero.meta':'Nada sai do seu PC · Sem conta · Sem assinatura · 30 idiomas',
+    'features.header':'Tudo que você precisa. Nada que não precisa.',
+    'features.sub':'As ferramentas que importam, feitas para velocidade e privacidade.',
+    'feat.view.title':'Visualizar PDFs','feat.view.desc':'Rolagem suave, zoom, busca de texto e atalhos de teclado. Renderizado com o mesmo motor do navegador mais popular do mundo.',
+    'feat.merge.title':'Unir Arquivos e Imagens','feat.merge.desc':'Combine PDFs e imagens em um único documento. Arraste JPG, PNG, WebP, TIFF, BMP ou GIF — viram páginas instantaneamente. Sem etapa de conversão.',
+    'feat.split.title':'Dividir PDFs','feat.split.desc':'Extraia páginas específicas ou digite um intervalo como "1-10, 25, 30-45". Seleção visual com miniaturas. Divida por intervalo ou escolha páginas individuais.',
+    'feat.org.title':'Organizar Páginas','feat.org.desc':'Todas as suas páginas como miniaturas. Arraste para reordenar, girar ou excluir. Suporte completo de desfazer — mude de ideia a qualquer momento.',
+    'feat.comp.title':'Compressão Real','feat.comp.desc':'Não é compressão "remover metadados". O PDF Kit reamostra imagens na resolução que você escolher. 122 MB → 27 MB. Três predefinições: e-mail, escritório, impressão.',
+    'feat.print.title':'Impressão em Lote','feat.print.desc':'Arraste 20 PDFs e imprima todos com um clique. Uma capa entre cada documento mostra o nome do arquivo para separar instantaneamente da pilha de papel.',
+    'feat.hl.title':'Destacar Texto','feat.hl.desc':'Marcador suave que segue seu cursor entre linhas — como um marca-texto real. Quatro cores. Salvo como anotações PDF padrão visíveis em qualquer visualizador.',
+    'feat.text.title':'Adicionar Texto','feat.text.desc':'Clique em qualquer lugar para colocar uma nota, rótulo ou comentário. Escolha o tamanho e a cor da fonte. Sem precisar abrir um editor completo para uma anotação rápida.',
+    'feat.export.title':'Exportar para Imagens','feat.export.desc':'Salve qualquer página como PNG ou JPG. Escolha 72, 150 ou 300 DPI. Exporte todas as páginas, a atual ou um intervalo personalizado.',
+    'show.header':'Veja em ação.','show.sub':'Capturas reais do PDF Kit. O que você vê é o que você obtém.',
+    'show.merge.title':'Unir PDFs e Imagens','show.merge.desc':'Arraste vários PDFs ou imagens e combine-os em um único documento. Miniaturas visuais permitem ver exatamente o que você está unindo antes de confirmar.',
+    'show.split.title':'Divida com Precisão','show.split.desc':'Selecione páginas individuais ou digite um intervalo. Miniaturas visuais com seleções coloridas facilitam extrair exatamente as páginas que você precisa.',
+    'show.org.title':'Organize e Reordene','show.org.desc':'Veja todas as páginas como miniaturas. Arraste para reordenar, girar ou excluir. Suporte completo de desfazer para experimentar livremente sem preocupação.',
+    'show.comp.title':'Compressão Real','show.comp.desc':'Não é apenas remoção de metadados. O PDF Kit reamostra imagens no DPI que você escolher. Três predefinições para e-mail, escritório ou impressão — com comparação instantânea antes/depois.',
+    'show.view.title':'Visualizar e Adicionar Texto','show.view.desc':'Um visualizador PDF completo com rolagem suave, zoom e navegação de páginas. Clique em qualquer lugar para adicionar anotações de texto — sem editor pesado.',
+    'show.print.title':'Impressão em Lote','show.print.desc':'Carregue vários PDFs e imprima todos de uma vez. Capas automáticas entre documentos mostram o nome do arquivo, facilitando separar da pilha de papel.',
+    'priv.header':'Seus documentos nunca saem do seu PC.',
+    'priv.text':'Enquanto ferramentas online de PDF enviam seus contratos, declarações fiscais e registros médicos pelos servidores delas, o PDF Kit processa tudo localmente. Privacidade como recurso, não como promessa.',
+    'priv.tag1':'Sem telemetria','priv.tag2':'Sem nuvem','priv.tag3':'Sem conta','priv.tag4':'Funciona offline','priv.tag5':'Sem anúncios. Nunca.',
+    'price.header':'Uma compra. Para sempre sua.','price.sub':'Todos os recursos incluídos. Sem níveis, sem upsells, sem truques.',
+    'price.title':'PDF Kit','price.note':'Pagamento único na Microsoft Store','price.subnote':'Sem assinatura. Sem cobranças recorrentes. Pague uma vez.',
+    'price.li1':'Visualizar, unir, dividir, organizar, comprimir PDFs','price.li2':'Impressão em lote com capas automáticas','price.li3':'Destacar texto com 4 cores','price.li4':'Adicionar anotações de texto em qualquer lugar','price.li5':'Exportar páginas como imagens PNG/JPG','price.li6':'Compressão real com redução de imagens','price.li7':'Importar imagens: JPG, PNG, WebP, TIFF, BMP, GIF','price.li8':'100% privado — arquivos nunca saem do seu PC','price.li9':'30 idiomas suportados','price.li10':'Todas as atualizações futuras incluídas','price.cta':'Obter PDF Kit',
+    'faq.header':'Perguntas frequentes',
+    'faq.q1':'O PDF Kit é uma assinatura?','faq.a1':'Não. O PDF Kit é um pagamento único na Microsoft Store. Pague uma vez e é seu para sempre, incluindo todas as atualizações futuras dentro da mesma versão principal.',
+    'faq.q2':'O PDF Kit envia meus arquivos para algum lugar?','faq.a2':'Nunca. Todo o processamento acontece localmente no seu PC. Sem nuvem, sem uploads, sem conta necessária. Seus contratos e documentos pessoais ficam completamente privados.',
+    'faq.q3':'Posso destacar texto e vê-lo em outros leitores de PDF?','faq.a3':'Sim. Os destaques são salvos como anotações PDF padrão. São visíveis no Microsoft Edge, Adobe Acrobat Reader, Chrome e qualquer outro visualizador PDF que suporte o padrão.',
+    'faq.q4':'O que torna a compressão diferente?','faq.a4':'A maioria das ferramentas gratuitas apenas remove metadados ou aplica deflação básica. O PDF Kit reamostra as imagens dentro do PDF no DPI que você escolher (72, 150 ou 300). Um arquivo de 122 MB vira 27 MB — 78% menor — com qualidade que você controla.',
+    'faq.q5':'Funciona offline?','faq.a5':'Sim. O PDF Kit funciona 100% offline. A única chamada de rede é a verificação de licença da Microsoft Store, que é feita pelo Windows — não pelo nosso app.',
+    'cta.header':'Pronto para ter seu kit de PDF?','cta.sub':'Pagamento único na Microsoft Store. Sem conta, sem nuvem, sem assinatura.','cta.btn':'Obter PDF Kit — Microsoft Store',
+    'foot.tag':'PDF Kit — Haven Tech · Feito para Windows · Privado por design','foot.privacy':'Política de Privacidade','foot.contact':'Contato','foot.related':'Também da Haven Tech:'
+  },
+  'fr': {
+    'nav.features':'Fonctionnalités','nav.showcase':'Captures','nav.pricing':'Prix','nav.privacy':'Confidentialité',
+    'hero.badge':'Disponible sur Microsoft Store',
+    'hero.headline': HEADLINES['fr'],
+    'hero.sub':'Fusionnez, divisez, organisez, compressez, surlignez, imprimez et ajoutez du texte à tout PDF. Achat unique. Toutes les fonctionnalités incluses. Vos fichiers ne quittent jamais votre PC.',
+    'hero.cta':'Obtenir PDF Kit — Microsoft Store',
+    'hero.meta':'Rien ne quitte votre PC · Sans compte · Sans abonnement · 30 langues',
+    'features.header':"Tout ce dont vous avez besoin. Rien que vous n'ayez pas.",
+    'features.sub':'Les outils qui comptent, conçus pour la vitesse et la confidentialité.',
+    'feat.view.title':'Afficher les PDF','feat.view.desc':'Défilement fluide, zoom, recherche de texte et raccourcis clavier. Rendu avec le même moteur que le navigateur le plus populaire au monde.',
+    'feat.merge.title':'Fusionner Fichiers et Images','feat.merge.desc':'Combinez PDF et images en un seul document. Glissez JPG, PNG, WebP, TIFF, BMP ou GIF — ils deviennent des pages instantanément. Sans étape de conversion.',
+    'feat.split.title':'Diviser les PDF','feat.split.desc':'Extrayez des pages spécifiques ou tapez une plage comme "1-10, 25, 30-45". Sélection visuelle avec miniatures. Divisez par plage ou choisissez des pages individuelles.',
+    'feat.org.title':'Organiser les Pages','feat.org.desc':'Toutes vos pages en miniatures. Glissez pour réorganiser, pivoter ou supprimer. Annulation complète — changez d\'avis quand vous voulez.',
+    'feat.comp.title':'Compression Réelle','feat.comp.desc':'Pas une compression "supprimer les métadonnées". PDF Kit rééchantillonne les images à la résolution que vous choisissez. 122 Mo → 27 Mo. Trois préréglages : e-mail, bureau, impression.',
+    'feat.print.title':'Impression par Lot','feat.print.desc':'Glissez 20 PDF et imprimez-les tous en un clic. Une page de garde entre chaque document affiche le nom du fichier pour un tri instantané depuis la pile.',
+    'feat.hl.title':'Surligner le Texte','feat.hl.desc':'Marqueur fluide qui suit votre curseur entre les lignes — comme un vrai surligneur. Quatre couleurs. Enregistré comme annotation PDF standard visible dans tout visualiseur.',
+    'feat.text.title':'Ajouter du Texte','feat.text.desc':'Cliquez n\'importe où pour placer une note, une étiquette ou un commentaire. Choisissez la taille et la couleur de police. Pas besoin d\'ouvrir un éditeur complet pour une annotation rapide.',
+    'feat.export.title':'Exporter en Images','feat.export.desc':'Enregistrez toute page en PNG ou JPG. Choisissez 72, 150 ou 300 DPI. Exportez toutes les pages, la page actuelle ou une plage personnalisée.',
+    'show.header':'Voyez-le en action.','show.sub':'Captures réelles de PDF Kit. Ce que vous voyez est ce que vous obtenez.',
+    'show.merge.title':'Fusionner PDF et Images','show.merge.desc':'Glissez plusieurs PDF ou images et combinez-les en un seul document. Les miniatures vous permettent de voir exactement ce que vous fusionnez avant de valider.',
+    'show.split.title':'Diviser avec Précision','show.split.desc':'Sélectionnez des pages individuelles ou tapez une plage. Miniatures visuelles avec sélections colorées pour extraire exactement les pages dont vous avez besoin.',
+    'show.org.title':'Organiser et Réorganiser','show.org.desc':'Voyez toutes les pages en miniatures. Glissez pour réorganiser, pivoter ou supprimer. Annulation complète pour expérimenter librement.',
+    'show.comp.title':'Compression Réelle','show.comp.desc':'Pas seulement suppression de métadonnées. PDF Kit rééchantillonne les images au DPI choisi. Trois préréglages pour e-mail, bureau ou impression — avec comparaison avant/après instantanée.',
+    'show.view.title':'Afficher et Ajouter du Texte','show.view.desc':'Un visualiseur PDF complet avec défilement fluide, zoom et navigation. Cliquez n\'importe où pour ajouter des annotations textuelles — sans éditeur lourd.',
+    'show.print.title':'Impression par Lot','show.print.desc':'Chargez plusieurs PDF et imprimez-les tous en une fois. Des pages de garde automatiques entre les documents affichent le nom du fichier pour trier facilement.',
+    'priv.header':'Vos documents ne quittent jamais votre PC.',
+    'priv.text':'Alors que les outils PDF en ligne envoient vos contrats, déclarations fiscales et dossiers médicaux sur leurs serveurs, PDF Kit traite tout localement. La confidentialité comme fonctionnalité, pas comme promesse.',
+    'priv.tag1':'Pas de télémétrie','priv.tag2':'Pas de cloud','priv.tag3':'Pas de compte','priv.tag4':'Fonctionne hors ligne','priv.tag5':'Pas de pub. Jamais.',
+    'price.header':'Un achat. À vous pour toujours.','price.sub':'Toutes les fonctionnalités incluses. Pas de niveaux, pas de ventes incitatives, pas d\'astuces.',
+    'price.title':'PDF Kit','price.note':'Achat unique sur Microsoft Store','price.subnote':'Pas d\'abonnement. Pas de frais récurrents. Payez une fois.',
+    'price.li1':'Voir, fusionner, diviser, organiser, compresser des PDF','price.li2':'Impression par lot avec pages de garde automatiques','price.li3':'Surligner le texte avec 4 couleurs','price.li4':'Ajouter des annotations textuelles partout','price.li5':'Exporter les pages en images PNG/JPG','price.li6':'Compression réelle avec sous-échantillonnage d\'images','price.li7':'Importer des images : JPG, PNG, WebP, TIFF, BMP, GIF','price.li8':'100% privé — les fichiers ne quittent jamais votre PC','price.li9':'30 langues prises en charge','price.li10':'Toutes les mises à jour futures incluses','price.cta':'Obtenir PDF Kit',
+    'faq.header':'Questions fréquentes',
+    'faq.q1':'PDF Kit est-il un abonnement ?','faq.a1':'Non. PDF Kit est un achat unique sur Microsoft Store. Payez une fois et c\'est à vous pour toujours, y compris toutes les mises à jour futures au sein de la même version majeure.',
+    'faq.q2':'PDF Kit envoie-t-il mes fichiers quelque part ?','faq.a2':'Jamais. Tout le traitement se fait localement sur votre PC. Pas de cloud, pas de téléchargement, pas de compte requis. Vos contrats, déclarations fiscales et documents personnels restent complètement privés.',
+    'faq.q3':'Puis-je surligner du texte et le voir dans d\'autres lecteurs PDF ?','faq.a3':'Oui. Les surlignages sont enregistrés comme annotations PDF standard. Ils sont visibles dans Microsoft Edge, Adobe Acrobat Reader, Chrome et tout autre visualiseur PDF respectant la norme.',
+    'faq.q4':'Qu\'est-ce qui rend la compression différente ?','faq.a4':'La plupart des outils gratuits suppriment seulement les métadonnées ou appliquent une déflation basique. PDF Kit rééchantillonne réellement les images dans le PDF au DPI choisi (72, 150 ou 300). Un fichier de 122 Mo devient 27 Mo — 78% plus petit — avec une qualité que vous contrôlez.',
+    'faq.q5':'Fonctionne-t-il hors ligne ?','faq.a5':'Oui. PDF Kit fonctionne 100% hors ligne. Le seul appel réseau est la vérification de licence Microsoft Store, gérée par Windows — pas par notre application.',
+    'cta.header':'Prêt à posséder votre boîte à outils PDF ?','cta.sub':'Achat unique sur Microsoft Store. Pas de compte, pas de cloud, pas d\'abonnement.','cta.btn':'Obtenir PDF Kit — Microsoft Store',
+    'foot.tag':'PDF Kit — Haven Tech · Conçu pour Windows · Privé par conception','foot.privacy':'Politique de Confidentialité','foot.contact':'Contact','foot.related':'Également par Haven Tech :'
+  },
+  'de': {
+    'nav.features':'Funktionen','nav.showcase':'Screenshots','nav.pricing':'Preis','nav.privacy':'Datenschutz',
+    'hero.badge':'Im Microsoft Store verfügbar',
+    'hero.headline': HEADLINES['de'],
+    'hero.sub':'Zusammenführen, teilen, organisieren, komprimieren, hervorheben, drucken und Text zu jeder PDF hinzufügen. Einmaliger Kauf. Alle Funktionen enthalten. Ihre Dateien verlassen nie Ihren PC.',
+    'hero.cta':'PDF Kit erhalten — Microsoft Store',
+    'hero.meta':'Nichts verlässt Ihren PC · Kein Konto · Kein Abo · 30 Sprachen',
+    'features.header':'Alles, was Sie brauchen. Nichts, was Sie nicht brauchen.',
+    'features.sub':'Die Werkzeuge, die zählen, für Geschwindigkeit und Datenschutz gebaut.',
+    'feat.view.title':'PDFs anzeigen','feat.view.desc':'Flüssiges Scrollen, Zoom, Textsuche und Tastenkürzel. Gerendert mit der gleichen Engine hinter dem weltweit beliebtesten Browser.',
+    'feat.merge.title':'Dateien und Bilder zusammenführen','feat.merge.desc':'Kombinieren Sie PDFs und Bilder in einem Dokument. Ziehen Sie JPG, PNG, WebP, TIFF, BMP oder GIF — sie werden sofort zu Seiten. Kein Konvertierungsschritt.',
+    'feat.split.title':'PDFs teilen','feat.split.desc':'Extrahieren Sie bestimmte Seiten oder geben Sie einen Bereich wie "1-10, 25, 30-45" ein. Visuelle Auswahl mit Miniaturansichten.',
+    'feat.org.title':'Seiten organisieren','feat.org.desc':'Alle Seiten als Miniaturansichten. Ziehen zum Neuordnen, Drehen oder Löschen. Vollständige Rückgängig-Unterstützung — ändern Sie Ihre Meinung jederzeit.',
+    'feat.comp.title':'Echte Komprimierung','feat.comp.desc':'Keine "Metadaten-entfernen"-Komprimierung. PDF Kit sampelt Bilder in der gewählten Auflösung neu. 122 MB → 27 MB. Drei Voreinstellungen: E-Mail, Büro, Druck.',
+    'feat.print.title':'Stapeldruck','feat.print.desc':'Ziehen Sie 20 PDFs und drucken Sie alle mit einem Klick. Ein Deckblatt zwischen jedem Dokument zeigt den Dateinamen für sofortige Sortierung vom Papierstapel.',
+    'feat.hl.title':'Text hervorheben','feat.hl.desc':'Flüssiger Marker, der Ihrem Cursor zeilenübergreifend folgt — wie ein echter Textmarker. Vier Farben. Als Standard-PDF-Annotationen gespeichert, in jedem Viewer sichtbar.',
+    'feat.text.title':'Text hinzufügen','feat.text.desc':'Klicken Sie irgendwo, um eine Notiz, Beschriftung oder einen Kommentar zu platzieren. Wählen Sie Schriftgröße und Farbe. Kein vollständiger Editor für eine schnelle Anmerkung nötig.',
+    'feat.export.title':'Als Bilder exportieren','feat.export.desc':'Speichern Sie jede Seite als PNG oder JPG. Wählen Sie 72, 150 oder 300 DPI. Exportieren Sie alle Seiten, die aktuelle oder einen benutzerdefinierten Bereich.',
+    'show.header':'Sehen Sie es in Aktion.','show.sub':'Echte Screenshots von PDF Kit. Was Sie sehen, ist was Sie bekommen.',
+    'show.merge.title':'PDFs und Bilder zusammenführen','show.merge.desc':'Ziehen Sie mehrere PDFs oder Bilder und kombinieren Sie sie zu einem Dokument. Visuelle Miniaturansichten zeigen Ihnen genau, was Sie zusammenführen, bevor Sie bestätigen.',
+    'show.split.title':'Präzise teilen','show.split.desc':'Wählen Sie einzelne Seiten oder geben Sie einen Bereich ein. Visuelle Miniaturansichten mit farbcodierten Auswahlen erleichtern das Extrahieren genau der benötigten Seiten.',
+    'show.org.title':'Organisieren und Umsortieren','show.org.desc':'Sehen Sie alle Seiten als Miniaturansichten. Ziehen zum Neuordnen, Drehen oder Löschen. Vollständige Rückgängig-Unterstützung zum freien Experimentieren.',
+    'show.comp.title':'Echte Komprimierung','show.comp.desc':'Nicht nur Metadaten-Entfernung. PDF Kit sampelt Bilder in der gewählten DPI neu. Drei Voreinstellungen für E-Mail, Büro oder Druck — mit sofortigem Vorher/Nachher-Vergleich.',
+    'show.view.title':'Anzeigen und Text hinzufügen','show.view.desc':'Ein vollständiger PDF-Viewer mit flüssigem Scrollen, Zoom und Seitennavigation. Klicken Sie irgendwo, um Textanmerkungen hinzuzufügen — ohne schweren Editor.',
+    'show.print.title':'Stapeldruck','show.print.desc':'Laden Sie mehrere PDFs und drucken Sie alle auf einmal. Automatische Deckblätter zwischen Dokumenten zeigen den Dateinamen zur einfachen Sortierung.',
+    'priv.header':'Ihre Dokumente verlassen nie Ihren PC.',
+    'priv.text':'Während Online-PDF-Tools Ihre Verträge, Steuererklärungen und medizinischen Unterlagen über ihre Server senden, verarbeitet PDF Kit alles lokal. Datenschutz als Funktion, nicht als Versprechen.',
+    'priv.tag1':'Keine Telemetrie','priv.tag2':'Keine Cloud','priv.tag3':'Kein Konto','priv.tag4':'Funktioniert offline','priv.tag5':'Keine Werbung. Nie.',
+    'price.header':'Ein Kauf. Für immer Ihnen.','price.sub':'Alle Funktionen enthalten. Keine Stufen, kein Upselling, keine Tricks.',
+    'price.title':'PDF Kit','price.note':'Einmaliger Kauf im Microsoft Store','price.subnote':'Kein Abo. Keine wiederkehrenden Gebühren. Einmal bezahlen.',
+    'price.li1':'PDFs anzeigen, zusammenführen, teilen, organisieren, komprimieren','price.li2':'Stapeldruck mit automatischen Deckblättern','price.li3':'Text in 4 Farben hervorheben','price.li4':'Textanmerkungen überall hinzufügen','price.li5':'Seiten als PNG/JPG-Bilder exportieren','price.li6':'Echte Komprimierung mit Bild-Downsampling','price.li7':'Bilder importieren: JPG, PNG, WebP, TIFF, BMP, GIF','price.li8':'100% privat — Dateien verlassen nie Ihren PC','price.li9':'30 Sprachen unterstützt','price.li10':'Alle zukünftigen Updates enthalten','price.cta':'PDF Kit erhalten',
+    'faq.header':'Häufige Fragen',
+    'faq.q1':'Ist PDF Kit ein Abo?','faq.a1':'Nein. PDF Kit ist ein einmaliger Kauf im Microsoft Store. Einmal zahlen und es gehört Ihnen für immer, einschließlich aller zukünftigen Updates innerhalb derselben Hauptversion.',
+    'faq.q2':'Lädt PDF Kit meine Dateien irgendwohin hoch?','faq.a2':'Niemals. Die gesamte Verarbeitung erfolgt lokal auf Ihrem PC. Keine Cloud, keine Uploads, kein Konto erforderlich. Ihre Verträge und persönlichen Dokumente bleiben komplett privat.',
+    'faq.q3':'Kann ich Text hervorheben und in anderen PDF-Readern sehen?','faq.a3':'Ja. Hervorhebungen werden als Standard-PDF-Annotationen gespeichert. Sie sind in Microsoft Edge, Adobe Acrobat Reader, Chrome und jedem anderen PDF-Viewer sichtbar.',
+    'faq.q4':'Was macht die Komprimierung anders?','faq.a4':'Die meisten kostenlosen Tools entfernen nur Metadaten oder wenden einfache Deflation an. PDF Kit sampelt tatsächlich Bilder in der PDF mit dem gewählten DPI (72, 150 oder 300) neu. Eine 122-MB-Datei wird zu 27 MB — 78% kleiner — mit kontrollierbarer Qualität.',
+    'faq.q5':'Funktioniert es offline?','faq.a5':'Ja. PDF Kit funktioniert 100% offline. Der einzige Netzwerkaufruf ist die Microsoft Store-Lizenzprüfung, die von Windows gehandhabt wird — nicht von unserer App.',
+    'cta.header':'Bereit, Ihr PDF-Toolkit zu besitzen?','cta.sub':'Einmaliger Kauf im Microsoft Store. Kein Konto, keine Cloud, kein Abo.','cta.btn':'PDF Kit erhalten — Microsoft Store',
+    'foot.tag':'PDF Kit — Haven Tech · Für Windows gebaut · Privat by design','foot.privacy':'Datenschutzrichtlinie','foot.contact':'Kontakt','foot.related':'Auch von Haven Tech:'
+  },
+  'it': {
+    'nav.features':'Funzionalità','nav.showcase':'Screenshot','nav.pricing':'Prezzo','nav.privacy':'Privacy',
+    'hero.badge':'Disponibile su Microsoft Store',
+    'hero.headline': HEADLINES['it'],
+    'hero.sub':'Unisci, dividi, organizza, comprimi, evidenzia, stampa e aggiungi testo a qualsiasi PDF. Acquisto unico. Tutte le funzionalità incluse. I tuoi file non lasciano mai il tuo PC.',
+    'hero.cta':'Ottieni PDF Kit — Microsoft Store',
+    'hero.meta':'Nulla lascia il tuo PC · Nessun account · Nessun abbonamento · 30 lingue',
+    'features.header':'Tutto ciò che serve. Niente che non serve.',
+    'features.sub':'Gli strumenti che contano, costruiti per velocità e privacy.',
+    'feat.view.title':'Visualizza PDF','feat.view.desc':'Scorrimento fluido, zoom, ricerca testo e scorciatoie da tastiera. Renderizzato con lo stesso motore dietro il browser più popolare al mondo.',
+    'feat.merge.title':'Unisci File e Immagini','feat.merge.desc':'Combina PDF e immagini in un unico documento. Trascina JPG, PNG, WebP, TIFF, BMP o GIF — diventano pagine all\'istante. Nessun passaggio di conversione.',
+    'feat.split.title':'Dividi PDF','feat.split.desc':'Estrai pagine specifiche o digita un intervallo come "1-10, 25, 30-45". Selezione visiva con miniature. Dividi per intervallo o scegli pagine individuali.',
+    'feat.org.title':'Organizza Pagine','feat.org.desc':'Tutte le tue pagine come miniature. Trascina per riordinare, ruotare o eliminare. Supporto completo per annullare — cambia idea quando vuoi.',
+    'feat.comp.title':'Compressione Reale','feat.comp.desc':'Non compressione "rimuovi metadati". PDF Kit ricampiona le immagini alla risoluzione scelta. 122 MB → 27 MB. Tre preset: e-mail, ufficio, stampa.',
+    'feat.print.title':'Stampa in Batch','feat.print.desc':'Trascina 20 PDF e stampali tutti con un clic. Una copertina tra ogni documento mostra il nome del file per smistare istantaneamente dalla pila.',
+    'feat.hl.title':'Evidenzia Testo','feat.hl.desc':'Marcatore fluido che segue il cursore tra le righe — come un vero evidenziatore. Quattro colori. Salvato come annotazioni PDF standard visibili in qualsiasi visualizzatore.',
+    'feat.text.title':'Aggiungi Testo','feat.text.desc':'Clicca ovunque per posizionare una nota, etichetta o commento. Scegli dimensione e colore del font. Nessun bisogno di aprire un editor completo per un\'annotazione rapida.',
+    'feat.export.title':'Esporta in Immagini','feat.export.desc':'Salva qualsiasi pagina come PNG o JPG. Scegli 72, 150 o 300 DPI. Esporta tutte le pagine, quella corrente o un intervallo personalizzato.',
+    'show.header':'Vedilo in azione.','show.sub':'Screenshot reali di PDF Kit. Quello che vedi è quello che ottieni.',
+    'show.merge.title':'Unisci PDF e Immagini','show.merge.desc':'Trascina più PDF o immagini e combinali in un unico documento. Le miniature visive ti permettono di vedere esattamente cosa stai unendo prima di confermare.',
+    'show.split.title':'Dividi con Precisione','show.split.desc':'Seleziona pagine individuali o digita un intervallo. Miniature visive con selezioni colorate facilitano l\'estrazione esatta delle pagine necessarie.',
+    'show.org.title':'Organizza e Riordina','show.org.desc':'Vedi tutte le pagine come miniature. Trascina per riordinare, ruotare o eliminare. Supporto completo per annullare per sperimentare liberamente.',
+    'show.comp.title':'Compressione Reale','show.comp.desc':'Non solo rimozione di metadati. PDF Kit ricampiona le immagini al DPI scelto. Tre preset per e-mail, ufficio o stampa — con confronto istantaneo prima/dopo.',
+    'show.view.title':'Visualizza e Aggiungi Testo','show.view.desc':'Un visualizzatore PDF completo con scorrimento fluido, zoom e navigazione pagine. Clicca ovunque per aggiungere annotazioni di testo — senza editor pesante.',
+    'show.print.title':'Stampa in Batch','show.print.desc':'Carica più PDF e stampali tutti insieme. Copertine automatiche tra documenti mostrano il nome del file, facilitando lo smistamento.',
+    'priv.header':'I tuoi documenti non lasciano mai il tuo PC.',
+    'priv.text':'Mentre gli strumenti PDF online inviano i tuoi contratti, dichiarazioni fiscali e cartelle cliniche attraverso i loro server, PDF Kit elabora tutto localmente. Privacy come funzionalità, non come promessa.',
+    'priv.tag1':'Nessuna telemetria','priv.tag2':'Nessun cloud','priv.tag3':'Nessun account','priv.tag4':'Funziona offline','priv.tag5':'Nessuna pubblicità. Mai.',
+    'price.header':'Un acquisto. Tuo per sempre.','price.sub':'Tutte le funzionalità incluse. Nessun livello, nessun upsell, nessun trucco.',
+    'price.title':'PDF Kit','price.note':'Acquisto unico su Microsoft Store','price.subnote':'Nessun abbonamento. Nessun addebito ricorrente. Paga una volta.',
+    'price.li1':'Visualizza, unisci, dividi, organizza, comprimi PDF','price.li2':'Stampa in batch con copertine automatiche','price.li3':'Evidenzia testo con 4 colori','price.li4':'Aggiungi annotazioni di testo ovunque','price.li5':'Esporta pagine come immagini PNG/JPG','price.li6':'Compressione reale con ricampionamento immagini','price.li7':'Importa immagini: JPG, PNG, WebP, TIFF, BMP, GIF','price.li8':'100% privato — i file non lasciano mai il tuo PC','price.li9':'30 lingue supportate','price.li10':'Tutti gli aggiornamenti futuri inclusi','price.cta':'Ottieni PDF Kit',
+    'faq.header':'Domande frequenti',
+    'faq.q1':'PDF Kit è un abbonamento?','faq.a1':'No. PDF Kit è un acquisto unico su Microsoft Store. Paga una volta ed è tuo per sempre, inclusi tutti gli aggiornamenti futuri all\'interno della stessa versione principale.',
+    'faq.q2':'PDF Kit carica i miei file da qualche parte?','faq.a2':'Mai. Tutta l\'elaborazione avviene localmente sul tuo PC. Nessun cloud, nessun upload, nessun account richiesto. I tuoi contratti e documenti personali rimangono completamente privati.',
+    'faq.q3':'Posso evidenziare testo e vederlo in altri lettori PDF?','faq.a3':'Sì. Le evidenziazioni sono salvate come annotazioni PDF standard. Sono visibili in Microsoft Edge, Adobe Acrobat Reader, Chrome e qualsiasi altro visualizzatore PDF che supporti lo standard.',
+    'faq.q4':'Cosa rende la compressione diversa?','faq.a4':'La maggior parte degli strumenti gratuiti rimuove solo metadati o applica deflazione base. PDF Kit ricampiona effettivamente le immagini nel PDF al DPI scelto (72, 150 o 300). Un file di 122 MB diventa 27 MB — 78% più piccolo — con qualità che puoi controllare.',
+    'faq.q5':'Funziona offline?','faq.a5':'Sì. PDF Kit funziona 100% offline. L\'unica chiamata di rete è la verifica della licenza Microsoft Store, gestita da Windows — non dalla nostra app.',
+    'cta.header':'Pronto per avere il tuo kit PDF?','cta.sub':'Acquisto unico su Microsoft Store. Nessun account, nessun cloud, nessun abbonamento.','cta.btn':'Ottieni PDF Kit — Microsoft Store',
+    'foot.tag':'PDF Kit — Haven Tech · Costruito per Windows · Privato by design','foot.privacy':'Informativa sulla Privacy','foot.contact':'Contatto','foot.related':'Anche da Haven Tech:'
+  },
+  'ja': {
+    'nav.features':'機能','nav.showcase':'スクリーンショット','nav.pricing':'価格','nav.privacy':'プライバシー',
+    'hero.badge':'Microsoft Storeで配信中',
+    'hero.headline': HEADLINES['ja'],
+    'hero.sub':'PDFを結合、分割、整理、圧縮、ハイライト、印刷、テキスト追加。買い切り。全機能込み。ファイルはPCから出ません。',
+    'hero.cta':'PDF Kitを入手 — Microsoft Store',
+    'hero.meta':'PCから何も出ない · アカウント不要 · サブスク不要 · 30言語対応',
+    'features.header':'必要なものすべて。不要なものは何も。',
+    'features.sub':'速度とプライバシーのために作られた、本当に必要なツール。',
+    'feat.view.title':'PDF表示','feat.view.desc':'スムーズなスクロール、ズーム、テキスト検索、キーボードショートカット。世界で最も人気のあるブラウザと同じエンジンでレンダリング。',
+    'feat.merge.title':'ファイルと画像を結合','feat.merge.desc':'PDFと画像を1つの文書に結合。JPG、PNG、WebP、TIFF、BMP、GIFをドラッグすると即座にページになります。変換手順なし。',
+    'feat.split.title':'PDFを分割','feat.split.desc':'特定のページを抽出、または「1-10, 25, 30-45」のような範囲を入力。サムネイルでの視覚的選択。範囲で分割、または個別ページを選択。',
+    'feat.org.title':'ページを整理','feat.org.desc':'すべてのページをサムネイル表示。ドラッグで並び替え、回転、削除。完全な元に戻すサポート — いつでも気が変われます。',
+    'feat.comp.title':'本物の圧縮','feat.comp.desc':'「メタデータ削除」圧縮ではありません。PDF Kitは選択した解像度で画像を再サンプリングします。122 MB → 27 MB。3つのプリセット：メール、オフィス、印刷。',
+    'feat.print.title':'一括印刷','feat.print.desc':'20個のPDFをドラッグして1クリックで全部印刷。各文書の間の表紙にファイル名が表示され、紙の山から即座に仕分けできます。',
+    'feat.hl.title':'テキストをハイライト','feat.hl.desc':'行をまたいでカーソルを追うスムーズなマーカー — 本物のハイライターのように。4色。標準PDF注釈として保存され、どのビューアでも表示可能。',
+    'feat.text.title':'テキスト追加','feat.text.desc':'どこでもクリックしてメモ、ラベル、コメントを配置。フォントサイズと色を選択。簡単な注釈のために重いエディタを開く必要はありません。',
+    'feat.export.title':'画像としてエクスポート','feat.export.desc':'任意のページをPNGまたはJPGとして保存。72、150、300 DPIから選択。すべてのページ、現在のページ、またはカスタム範囲をエクスポート。',
+    'show.header':'実際の動作を見る。','show.sub':'PDF Kitの実際のスクリーンショット。見たままの機能。',
+    'show.merge.title':'PDFと画像を結合','show.merge.desc':'複数のPDFや画像をドラッグして1つの文書に結合。視覚的なページサムネイルで、確定前に何を結合しているか正確に確認できます。',
+    'show.split.title':'精密に分割','show.split.desc':'個別ページを選択するか範囲を入力。色分けされた視覚的なサムネイルで、必要なページを正確に抽出しやすくなります。',
+    'show.org.title':'整理と並び替え','show.org.desc':'すべてのページをサムネイル表示。ドラッグで並び替え、回転、削除。完全な元に戻すサポートで自由に試せます。',
+    'show.comp.title':'本物の圧縮','show.comp.desc':'メタデータ削除だけではありません。PDF Kitは選択したDPIで画像を再サンプリング。メール、オフィス、印刷用の3つのプリセット — 即座にビフォーアフター比較。',
+    'show.view.title':'表示とテキスト追加','show.view.desc':'スムーズなスクロール、ズーム、ページナビゲーションを備えた完全なPDFビューア。どこでもクリックしてテキスト注釈を追加 — 重いエディタは不要。',
+    'show.print.title':'一括印刷','show.print.desc':'複数のPDFをロードして一度に全部印刷。文書間の自動表紙にファイル名が表示され、簡単に仕分けできます。',
+    'priv.header':'ドキュメントは絶対にPCから出ません。',
+    'priv.text':'オンラインPDFツールが契約書、確定申告、医療記録をサーバーに送信するのに対し、PDF Kitはすべてローカルで処理します。プライバシーは機能であり、約束ではありません。',
+    'priv.tag1':'テレメトリーなし','priv.tag2':'クラウドなし','priv.tag3':'アカウントなし','priv.tag4':'オフラインで動作','priv.tag5':'広告なし。絶対に。',
+    'price.header':'一度の購入。永久に所有。','price.sub':'全機能込み。階層なし、アップセルなし、トリックなし。',
+    'price.title':'PDF Kit','price.note':'Microsoft Storeで買い切り','price.subnote':'サブスクなし。定期課金なし。一度だけ支払い。',
+    'price.li1':'PDFの表示、結合、分割、整理、圧縮','price.li2':'自動表紙付き一括印刷','price.li3':'4色でテキストハイライト','price.li4':'どこでもテキスト注釈追加','price.li5':'ページをPNG/JPG画像としてエクスポート','price.li6':'画像ダウンサンプリングによる本物の圧縮','price.li7':'画像インポート：JPG、PNG、WebP、TIFF、BMP、GIF','price.li8':'100%プライベート — ファイルは絶対にPCから出ません','price.li9':'30言語対応','price.li10':'すべての今後の更新を含む','price.cta':'PDF Kitを入手',
+    'faq.header':'よくある質問',
+    'faq.q1':'PDF Kitはサブスクリプションですか？','faq.a1':'いいえ。PDF KitはMicrosoft Storeでの買い切りです。一度支払えば永久に所有でき、同じメジャーバージョン内のすべての今後の更新を含みます。',
+    'faq.q2':'PDF Kitはファイルをどこかにアップロードしますか？','faq.a2':'絶対にありません。すべての処理はPC上でローカルに行われます。クラウドなし、アップロードなし、アカウント不要。契約書や個人文書は完全にプライベートに保たれます。',
+    'faq.q3':'テキストをハイライトして他のPDFリーダーで見ることはできますか？','faq.a3':'はい。ハイライトは標準PDF注釈として保存されます。Microsoft Edge、Adobe Acrobat Reader、Chrome、その他PDF標準をサポートするビューアで表示可能です。',
+    'faq.q4':'圧縮が違うのはなぜですか？','faq.a4':'ほとんどの無料ツールはメタデータを削除するか、基本的なDeflateを適用するだけです。PDF Kitは選択したDPI（72、150、300）でPDF内の画像を実際に再サンプリングします。122 MBのファイルが27 MBになります — 78%小さく — 品質はコントロール可能。',
+    'faq.q5':'オフラインで動作しますか？','faq.a5':'はい。PDF Kitは100%オフラインで動作します。唯一のネットワーク通信はMicrosoft Storeのライセンス確認で、これはWindowsが処理します — 当アプリではありません。',
+    'cta.header':'PDFツールキットを所有する準備はできましたか？','cta.sub':'Microsoft Storeで買い切り。アカウントなし、クラウドなし、サブスクなし。','cta.btn':'PDF Kitを入手 — Microsoft Store',
+    'foot.tag':'PDF Kit — Haven Tech · Windows用に構築 · プライバシー設計','foot.privacy':'プライバシーポリシー','foot.contact':'お問い合わせ','foot.related':'Haven Techの他の製品：'
+  },
+  'zh-CN': {
+    'nav.features':'功能','nav.showcase':'截图','nav.pricing':'价格','nav.privacy':'隐私',
+    'hero.badge':'Microsoft Store 上架',
+    'hero.headline': HEADLINES['zh-CN'],
+    'hero.sub':'合并、拆分、整理、压缩、高亮、打印、向任何 PDF 添加文字。一次性购买。包含所有功能。您的文件永不离开电脑。',
+    'hero.cta':'获取 PDF Kit — Microsoft Store',
+    'hero.meta':'数据不出电脑 · 无需账户 · 无需订阅 · 30 种语言',
+    'features.header':'您需要的一切，不需要的一概没有。',
+    'features.sub':'真正重要的工具，为速度和隐私而生。',
+    'feat.view.title':'查看 PDF','feat.view.desc':'流畅滚动、缩放、文字搜索和键盘快捷键。使用与全球最流行浏览器相同的引擎渲染。',
+    'feat.merge.title':'合并文件和图片','feat.merge.desc':'将 PDF 和图片合并为一个文档。拖入 JPG、PNG、WebP、TIFF、BMP 或 GIF — 它们瞬间变为页面。无需转换步骤。',
+    'feat.split.title':'拆分 PDF','feat.split.desc':'提取特定页面或输入范围如"1-10, 25, 30-45"。缩略图可视化选择。按范围拆分或选择单独页面。',
+    'feat.org.title':'整理页面','feat.org.desc':'所有页面以缩略图显示。拖动重新排序、旋转或删除。完整撤销支持 — 随时改变主意。',
+    'feat.comp.title':'真正的压缩','feat.comp.desc':'不是"删除元数据"的压缩。PDF Kit 按您选择的分辨率重采样图片。122 MB → 27 MB。三种预设：邮件、办公、打印。',
+    'feat.print.title':'批量打印','feat.print.desc':'拖入 20 个 PDF 一键打印。每个文档之间的封面页显示文件名，方便从纸堆中即时分类。',
+    'feat.hl.title':'高亮文字','feat.hl.desc':'跨行流畅跟随光标的标记 — 就像真正的荧光笔。四种颜色。保存为标准 PDF 注释，任何阅读器可见。',
+    'feat.text.title':'添加文字','feat.text.desc':'在任何位置点击放置便签、标签或评论。选择字体大小和颜色。无需为快速注释打开完整编辑器。',
+    'feat.export.title':'导出为图片','feat.export.desc':'将任何页面保存为 PNG 或 JPG。选择 72、150 或 300 DPI。导出所有页面、当前页面或自定义范围。',
+    'show.header':'实际操作演示。','show.sub':'PDF Kit 的真实截图。所见即所得。',
+    'show.merge.title':'合并 PDF 和图片','show.merge.desc':'拖入多个 PDF 或图片，将它们合并为一个文档。可视化页面缩略图让您在确认前看清要合并的内容。',
+    'show.split.title':'精确拆分','show.split.desc':'选择单独页面或输入范围。彩色编码的缩略图让您轻松提取所需的确切页面。',
+    'show.org.title':'整理和重排','show.org.desc':'所有页面以缩略图显示。拖动重排、旋转或删除。完整撤销支持让您自由试验而无后顾之忧。',
+    'show.comp.title':'真正的压缩','show.comp.desc':'不只是去除元数据。PDF Kit 按您选择的 DPI 重采样图片。邮件、办公、打印三种预设 — 即时前后对比。',
+    'show.view.title':'查看并添加文字','show.view.desc':'功能齐全的 PDF 查看器，流畅滚动、缩放和页面导航。点击任何位置添加文字注释 — 无需笨重编辑器。',
+    'show.print.title':'批量打印','show.print.desc':'加载多个 PDF 一次性打印。文档间自动封面页显示文件名，轻松分类。',
+    'priv.header':'您的文档永不离开电脑。',
+    'priv.text':'当在线 PDF 工具将您的合同、报税单和医疗记录通过其服务器传输时,PDF Kit 在本地处理一切。隐私是功能,不是承诺。',
+    'priv.tag1':'无遥测','priv.tag2':'无云端','priv.tag3':'无账户','priv.tag4':'离线工作','priv.tag5':'无广告。永远。',
+    'price.header':'一次购买,永久拥有。','price.sub':'包含所有功能。无分层、无附加销售、无套路。',
+    'price.title':'PDF Kit','price.note':'Microsoft Store 一次性购买','price.subnote':'无订阅。无定期扣费。付费一次。',
+    'price.li1':'查看、合并、拆分、整理、压缩 PDF','price.li2':'自动封面页的批量打印','price.li3':'4 种颜色高亮文字','price.li4':'在任何位置添加文字注释','price.li5':'将页面导出为 PNG/JPG 图片','price.li6':'带图片降采样的真正压缩','price.li7':'导入图片:JPG、PNG、WebP、TIFF、BMP、GIF','price.li8':'100% 私密 — 文件永不离开电脑','price.li9':'支持 30 种语言','price.li10':'包含所有未来更新','price.cta':'获取 PDF Kit',
+    'faq.header':'常见问题',
+    'faq.q1':'PDF Kit 是订阅制吗？','faq.a1':'不。PDF Kit 是 Microsoft Store 的一次性购买。付费一次即永久拥有,包含同一主版本内的所有未来更新。',
+    'faq.q2':'PDF Kit 会将我的文件上传到任何地方吗？','faq.a2':'永远不会。所有处理都在您的电脑本地进行。无云端、无上传、无需账户。您的合同、报税单和个人文档保持完全私密。',
+    'faq.q3':'我可以高亮文字并在其他 PDF 阅读器中查看吗？','faq.a3':'可以。高亮保存为标准 PDF 注释。在 Microsoft Edge、Adobe Acrobat Reader、Chrome 以及任何支持 PDF 标准的阅读器中可见。',
+    'faq.q4':'压缩有什么不同？','faq.a4':'大多数免费工具只是删除元数据或应用基本压缩。PDF Kit 实际上按您选择的 DPI(72、150 或 300)在 PDF 内部重采样图片。122 MB 文件变为 27 MB — 小 78% — 质量可控。',
+    'faq.q5':'离线可用吗？','faq.a5':'可以。PDF Kit 100% 离线工作。唯一的网络调用是 Microsoft Store 许可证验证,由 Windows 处理 — 不是我们的应用。',
+    'cta.header':'准备好拥有您的 PDF 工具包了吗？','cta.sub':'Microsoft Store 一次性购买。无账户、无云端、无订阅。','cta.btn':'获取 PDF Kit — Microsoft Store',
+    'foot.tag':'PDF Kit — Haven Tech · 为 Windows 打造 · 隐私优先设计','foot.privacy':'隐私政策','foot.contact':'联系我们','foot.related':'Haven Tech 其他产品:'
+  },
+  'ko': {
+    'nav.features':'기능','nav.showcase':'스크린샷','nav.pricing':'가격','nav.privacy':'개인정보',
+    'hero.badge':'Microsoft Store에서 제공 중',
+    'hero.headline': HEADLINES['ko'],
+    'hero.sub':'PDF를 병합, 분할, 정리, 압축, 강조, 인쇄, 텍스트 추가. 일회성 구매. 모든 기능 포함. 파일이 PC를 떠나지 않습니다.',
+    'hero.cta':'PDF Kit 받기 — Microsoft Store',
+    'hero.meta':'PC를 떠나지 않음 · 계정 불필요 · 구독 불필요 · 30개 언어 지원',
+    'features.header':'필요한 모든 것. 불필요한 건 없음.',
+    'features.sub':'속도와 개인정보 보호를 위해 만들어진, 정말 중요한 도구들.',
+    'feat.view.title':'PDF 보기','feat.view.desc':'부드러운 스크롤, 확대/축소, 텍스트 검색, 키보드 단축키. 세계에서 가장 인기 있는 브라우저의 엔진으로 렌더링.',
+    'feat.merge.title':'파일과 이미지 병합','feat.merge.desc':'PDF와 이미지를 하나의 문서로 결합. JPG, PNG, WebP, TIFF, BMP 또는 GIF를 끌어다 놓으면 즉시 페이지가 됩니다. 변환 단계 없음.',
+    'feat.split.title':'PDF 분할','feat.split.desc':'특정 페이지 추출 또는 "1-10, 25, 30-45"와 같은 범위 입력. 썸네일로 시각적 선택. 범위로 분할하거나 개별 페이지 선택.',
+    'feat.org.title':'페이지 정리','feat.org.desc':'모든 페이지를 썸네일로. 끌어서 재정렬, 회전 또는 삭제. 전체 실행 취소 지원 — 언제든 마음을 바꿀 수 있습니다.',
+    'feat.comp.title':'진짜 압축','feat.comp.desc':'"메타데이터 제거" 압축이 아닙니다. PDF Kit은 선택한 해상도로 이미지를 재샘플링합니다. 122 MB → 27 MB. 세 가지 사전 설정: 이메일, 사무실, 인쇄.',
+    'feat.print.title':'일괄 인쇄','feat.print.desc':'20개의 PDF를 끌어다 놓고 한 번의 클릭으로 모두 인쇄. 각 문서 사이의 표지 페이지에 파일 이름이 표시되어 종이 더미에서 즉시 분류 가능.',
+    'feat.hl.title':'텍스트 강조','feat.hl.desc':'줄을 가로지르며 커서를 따라가는 부드러운 마커 — 실제 형광펜처럼. 네 가지 색상. 표준 PDF 주석으로 저장되어 모든 뷰어에서 표시.',
+    'feat.text.title':'텍스트 추가','feat.text.desc':'어디든 클릭하여 메모, 라벨 또는 주석 배치. 글꼴 크기와 색상 선택. 빠른 주석을 위해 전체 편집기를 열 필요 없음.',
+    'feat.export.title':'이미지로 내보내기','feat.export.desc':'모든 페이지를 PNG 또는 JPG로 저장. 72, 150 또는 300 DPI 선택. 모든 페이지, 현재 페이지 또는 사용자 지정 범위 내보내기.',
+    'show.header':'실제 작동 보기.','show.sub':'PDF Kit의 실제 스크린샷. 보이는 그대로.',
+    'show.merge.title':'PDF와 이미지 병합','show.merge.desc':'여러 PDF 또는 이미지를 끌어다 놓고 하나의 문서로 결합. 시각적 페이지 썸네일로 확인 전에 병합 내용을 정확히 볼 수 있습니다.',
+    'show.split.title':'정밀 분할','show.split.desc':'개별 페이지 선택 또는 범위 입력. 색상 코딩된 썸네일로 필요한 페이지를 정확히 추출하기 쉽습니다.',
+    'show.org.title':'정리 및 재정렬','show.org.desc':'모든 페이지를 썸네일로. 끌어서 재정렬, 회전, 삭제. 전체 실행 취소 지원으로 걱정 없이 자유롭게 실험.',
+    'show.comp.title':'진짜 압축','show.comp.desc':'메타데이터 제거만이 아닙니다. PDF Kit은 선택한 DPI로 이미지를 재샘플링합니다. 이메일, 사무실, 인쇄용 세 가지 사전 설정 — 즉각적인 전후 비교.',
+    'show.view.title':'보기 및 텍스트 추가','show.view.desc':'부드러운 스크롤, 확대/축소, 페이지 탐색을 갖춘 완전한 PDF 뷰어. 어디든 클릭하여 텍스트 주석 추가 — 무거운 편집기 불필요.',
+    'show.print.title':'일괄 인쇄','show.print.desc':'여러 PDF를 로드하여 한 번에 모두 인쇄. 문서 사이의 자동 표지 페이지에 파일 이름이 표시되어 쉽게 분류.',
+    'priv.header':'문서가 절대 PC를 떠나지 않습니다.',
+    'priv.text':'온라인 PDF 도구가 귀하의 계약서, 세금 신고서, 의료 기록을 서버로 전송하는 동안, PDF Kit은 모든 것을 로컬에서 처리합니다. 개인정보 보호는 약속이 아닌 기능입니다.',
+    'priv.tag1':'텔레메트리 없음','priv.tag2':'클라우드 없음','priv.tag3':'계정 없음','priv.tag4':'오프라인 작동','priv.tag5':'광고 없음. 절대로.',
+    'price.header':'한 번 구매. 영원히 당신 것.','price.sub':'모든 기능 포함. 등급 없음, 업셀 없음, 속임수 없음.',
+    'price.title':'PDF Kit','price.note':'Microsoft Store에서 일회성 구매','price.subnote':'구독 없음. 반복 청구 없음. 한 번 지불.',
+    'price.li1':'PDF 보기, 병합, 분할, 정리, 압축','price.li2':'자동 표지 페이지로 일괄 인쇄','price.li3':'4가지 색상으로 텍스트 강조','price.li4':'어디든 텍스트 주석 추가','price.li5':'페이지를 PNG/JPG 이미지로 내보내기','price.li6':'이미지 다운샘플링을 통한 진짜 압축','price.li7':'이미지 가져오기: JPG, PNG, WebP, TIFF, BMP, GIF','price.li8':'100% 비공개 — 파일이 절대 PC를 떠나지 않음','price.li9':'30개 언어 지원','price.li10':'모든 향후 업데이트 포함','price.cta':'PDF Kit 받기',
+    'faq.header':'자주 묻는 질문',
+    'faq.q1':'PDF Kit은 구독제입니까?','faq.a1':'아니요. PDF Kit은 Microsoft Store의 일회성 구매입니다. 한 번 지불하면 영원히 당신 것이며, 동일한 주요 버전 내의 모든 향후 업데이트를 포함합니다.',
+    'faq.q2':'PDF Kit이 내 파일을 어딘가로 업로드합니까?','faq.a2':'절대 아닙니다. 모든 처리는 PC에서 로컬로 이루어집니다. 클라우드 없음, 업로드 없음, 계정 불필요. 계약서, 세금 신고서, 개인 문서가 완전히 비공개로 유지됩니다.',
+    'faq.q3':'텍스트를 강조하고 다른 PDF 리더에서 볼 수 있습니까?','faq.a3':'예. 강조는 표준 PDF 주석으로 저장됩니다. Microsoft Edge, Adobe Acrobat Reader, Chrome 및 PDF 표준을 지원하는 모든 뷰어에서 표시됩니다.',
+    'faq.q4':'압축이 다른 점은 무엇입니까?','faq.a4':'대부분의 무료 도구는 메타데이터만 제거하거나 기본적인 압축만 적용합니다. PDF Kit은 선택한 DPI(72, 150 또는 300)로 PDF 내부 이미지를 실제로 재샘플링합니다. 122 MB 파일이 27 MB로 — 78% 더 작게 — 품질은 제어 가능.',
+    'faq.q5':'오프라인에서 작동합니까?','faq.a5':'예. PDF Kit은 100% 오프라인에서 작동합니다. 유일한 네트워크 호출은 Microsoft Store 라이선스 확인으로, Windows가 처리합니다 — 우리 앱이 아닙니다.',
+    'cta.header':'PDF 도구 모음을 소유할 준비가 되셨습니까?','cta.sub':'Microsoft Store에서 일회성 구매. 계정 없음, 클라우드 없음, 구독 없음.','cta.btn':'PDF Kit 받기 — Microsoft Store',
+    'foot.tag':'PDF Kit — Haven Tech · Windows용 제작 · 설계부터 프라이빗','foot.privacy':'개인정보 처리방침','foot.contact':'문의','foot.related':'Haven Tech의 다른 제품:'
+  },
+  'ru': {
+    'nav.features':'Функции','nav.showcase':'Скриншоты','nav.pricing':'Цена','nav.privacy':'Конфиденциальность',
+    'hero.badge':'Доступно в Microsoft Store',
+    'hero.headline': HEADLINES['ru'],
+    'hero.sub':'Объединяйте, разделяйте, организуйте, сжимайте, выделяйте, печатайте и добавляйте текст в любой PDF. Единоразовая покупка. Все функции включены. Ваши файлы никогда не покидают ваш ПК.',
+    'hero.cta':'Получить PDF Kit — Microsoft Store',
+    'hero.meta':'Ничего не покидает ПК · Без аккаунта · Без подписки · 30 языков',
+    'features.header':'Всё, что нужно. Ничего лишнего.',
+    'features.sub':'Инструменты, которые важны, созданные для скорости и конфиденциальности.',
+    'feat.view.title':'Просмотр PDF','feat.view.desc':'Плавная прокрутка, масштабирование, поиск по тексту и горячие клавиши. Рендер на том же движке, что и самый популярный браузер в мире.',
+    'feat.merge.title':'Объединение файлов и изображений','feat.merge.desc':'Объединяйте PDF и изображения в один документ. Перетащите JPG, PNG, WebP, TIFF, BMP или GIF — они мгновенно станут страницами. Без этапа конвертации.',
+    'feat.split.title':'Разделение PDF','feat.split.desc':'Извлекайте определённые страницы или введите диапазон вроде "1-10, 25, 30-45". Визуальный выбор с миниатюрами. Разделяйте по диапазону или выбирайте отдельные страницы.',
+    'feat.org.title':'Организация страниц','feat.org.desc':'Все страницы в виде миниатюр. Перетаскивайте для изменения порядка, поворота или удаления. Полная поддержка отмены — меняйте решение в любой момент.',
+    'feat.comp.title':'Настоящее сжатие','feat.comp.desc':'Не "удаление метаданных". PDF Kit пересэмплирует изображения в выбранном разрешении. 122 МБ → 27 МБ. Три пресета: почта, офис, печать.',
+    'feat.print.title':'Пакетная печать','feat.print.desc':'Перетащите 20 PDF и распечатайте все одним кликом. Титульная страница между каждым документом показывает имя файла для мгновенной сортировки.',
+    'feat.hl.title':'Выделение текста','feat.hl.desc':'Плавный маркер, следующий за курсором между строками — как настоящий маркер. Четыре цвета. Сохраняется как стандартные PDF-аннотации, видимые в любом просмотрщике.',
+    'feat.text.title':'Добавление текста','feat.text.desc':'Кликните в любом месте, чтобы разместить заметку, метку или комментарий. Выберите размер и цвет шрифта. Не нужно открывать полный редактор для быстрой аннотации.',
+    'feat.export.title':'Экспорт в изображения','feat.export.desc':'Сохраняйте любую страницу как PNG или JPG. Выберите 72, 150 или 300 DPI. Экспортируйте все страницы, текущую или произвольный диапазон.',
+    'show.header':'Посмотрите в действии.','show.sub':'Реальные скриншоты PDF Kit. Что видите, то и получаете.',
+    'show.merge.title':'Объединение PDF и изображений','show.merge.desc':'Перетащите несколько PDF или изображений и объедините их в один документ. Визуальные миниатюры страниц позволяют точно видеть, что объединяете, до подтверждения.',
+    'show.split.title':'Разделение с точностью','show.split.desc':'Выбирайте отдельные страницы или введите диапазон. Визуальные миниатюры с цветовой кодировкой позволяют легко извлекать именно нужные страницы.',
+    'show.org.title':'Организация и перестановка','show.org.desc':'Смотрите все страницы в виде миниатюр. Перетаскивайте для изменения порядка, поворота или удаления. Полная поддержка отмены для свободных экспериментов.',
+    'show.comp.title':'Настоящее сжатие','show.comp.desc':'Не только удаление метаданных. PDF Kit пересэмплирует изображения в выбранном DPI. Три пресета для почты, офиса или печати — с мгновенным сравнением до/после.',
+    'show.view.title':'Просмотр и добавление текста','show.view.desc':'Полноценный PDF-просмотрщик с плавной прокруткой, масштабированием и навигацией. Кликните в любом месте для добавления текстовых аннотаций — без тяжёлого редактора.',
+    'show.print.title':'Пакетная печать','show.print.desc':'Загрузите несколько PDF и распечатайте все сразу. Автоматические титульные страницы между документами показывают имя файла для удобной сортировки.',
+    'priv.header':'Ваши документы никогда не покидают ваш ПК.',
+    'priv.text':'Пока онлайн-инструменты PDF отправляют ваши контракты, налоговые декларации и медицинские записи через свои серверы, PDF Kit обрабатывает всё локально. Приватность как функция, а не обещание.',
+    'priv.tag1':'Без телеметрии','priv.tag2':'Без облака','priv.tag3':'Без аккаунта','priv.tag4':'Работает офлайн','priv.tag5':'Без рекламы. Никогда.',
+    'price.header':'Одна покупка. Навсегда ваша.','price.sub':'Все функции включены. Без уровней, без допродаж, без уловок.',
+    'price.title':'PDF Kit','price.note':'Единоразовая покупка в Microsoft Store','price.subnote':'Без подписки. Без регулярных платежей. Заплатите один раз.',
+    'price.li1':'Просмотр, объединение, разделение, организация, сжатие PDF','price.li2':'Пакетная печать с автоматическими титульными страницами','price.li3':'Выделение текста 4 цветами','price.li4':'Добавление текстовых аннотаций в любом месте','price.li5':'Экспорт страниц в PNG/JPG изображения','price.li6':'Настоящее сжатие с понижением дискретизации изображений','price.li7':'Импорт изображений: JPG, PNG, WebP, TIFF, BMP, GIF','price.li8':'100% приватно — файлы никогда не покидают ваш ПК','price.li9':'30 языков поддерживаются','price.li10':'Все будущие обновления включены','price.cta':'Получить PDF Kit',
+    'faq.header':'Частые вопросы',
+    'faq.q1':'Является ли PDF Kit подпиской?','faq.a1':'Нет. PDF Kit — единоразовая покупка в Microsoft Store. Заплатите один раз, и он ваш навсегда, включая все будущие обновления в пределах той же основной версии.',
+    'faq.q2':'Загружает ли PDF Kit мои файлы куда-либо?','faq.a2':'Никогда. Вся обработка происходит локально на вашем ПК. Без облака, без загрузок, без аккаунта. Ваши контракты, налоговые декларации и личные документы остаются полностью приватными.',
+    'faq.q3':'Могу ли я выделять текст и видеть это в других PDF-ридерах?','faq.a3':'Да. Выделения сохраняются как стандартные PDF-аннотации. Они видны в Microsoft Edge, Adobe Acrobat Reader, Chrome и любом другом просмотрщике, поддерживающем стандарт PDF.',
+    'faq.q4':'Чем отличается сжатие?','faq.a4':'Большинство бесплатных инструментов только удаляют метаданные или применяют базовое сжатие. PDF Kit реально пересэмплирует изображения внутри PDF в выбранном DPI (72, 150 или 300). Файл 122 МБ становится 27 МБ — на 78% меньше — с качеством, которое вы контролируете.',
+    'faq.q5':'Работает ли офлайн?','faq.a5':'Да. PDF Kit работает 100% офлайн. Единственный сетевой запрос — проверка лицензии Microsoft Store, которую обрабатывает Windows — не наше приложение.',
+    'cta.header':'Готовы владеть своим PDF-инструментарием?','cta.sub':'Единоразовая покупка в Microsoft Store. Без аккаунта, без облака, без подписки.','cta.btn':'Получить PDF Kit — Microsoft Store',
+    'foot.tag':'PDF Kit — Haven Tech · Создано для Windows · Приватно по дизайну','foot.privacy':'Политика конфиденциальности','foot.contact':'Контакты','foot.related':'Также от Haven Tech:'
+  }
+};
+
 const RTL_LANGS = ['ar', 'he', 'fa', 'ur'];
 
-function resolveHeadlineKey(lang) {
+function resolveLang(lang) {
   if (!lang) return 'en';
-  if (HEADLINES[lang]) return lang;
-  // Chinese variants
-  if (lang.startsWith('zh')) {
-    return (lang.includes('TW') || lang.includes('HK') || lang.includes('Hant')) ? 'zh-TW' : 'zh-CN';
-  }
-  // Portuguese variants
+  if (T[lang] || HEADLINES[lang]) return lang;
+  if (lang.startsWith('zh')) return (lang.includes('TW') || lang.includes('HK') || lang.includes('Hant')) ? 'zh-TW' : 'zh-CN';
   if (lang.startsWith('pt')) return 'pt-BR';
-  // Try base language
   const base = lang.split('-')[0];
-  if (HEADLINES[base]) return base;
+  if (T[base] || HEADLINES[base]) return base;
   return 'en';
 }
 
-function setHeadline(lang) {
-  const key = resolveHeadlineKey(lang);
-  document.getElementById('hero-headline').innerHTML = HEADLINES[key];
-  document.getElementById('hero-headline').setAttribute('dir', RTL_LANGS.includes(key) ? 'rtl' : 'ltr');
+function applyTranslations(lang) {
+  const key = resolveLang(lang);
+  const dict = T[key] || {};
+  const fallback = T['en'];
+  // Update html lang + dir
+  document.documentElement.lang = key;
+  document.documentElement.dir = RTL_LANGS.includes(key) ? 'rtl' : 'ltr';
+  // Apply headline (from HEADLINES or dict)
+  const headlineEl = document.getElementById('hero-headline');
+  if (headlineEl) {
+    headlineEl.innerHTML = HEADLINES[key] || dict['hero.headline'] || fallback['hero.headline'];
+  }
+  // Apply all data-i18n elements
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const k = el.getAttribute('data-i18n');
+    if (k === 'hero.headline') return; // already handled
+    const val = dict[k] || fallback[k];
+    if (val !== undefined) el.textContent = val;
+  });
 }
 
 function setLang(lang) {
-  document.body.className = lang;
-  document.getElementById('btn-en').classList.toggle('active', lang === 'en');
-  document.getElementById('btn-es').classList.toggle('active', lang === 'es');
-  localStorage.setItem('pdfkit-lang', lang);
-  // When user manually toggles, override headline to match
-  setHeadline(lang);
+  const key = resolveLang(lang);
+  localStorage.setItem('pdfkit-lang', key);
+  applyTranslations(key);
+  const sel = document.getElementById('lang-select');
+  if (sel) sel.value = key;
 }
 
-// Auto-detect on load
-const browserLang = navigator.language || 'en';
+// Populate language selector dropdown
+(function initLangSelect() {
+  const sel = document.getElementById('lang-select');
+  LANGS.forEach(l => {
+    const opt = document.createElement('option');
+    opt.value = l.code; opt.textContent = l.name;
+    sel.appendChild(opt);
+  });
+})();
+
+// Auto-detect on first load
 const saved = localStorage.getItem('pdfkit-lang');
-if (saved) {
-  setLang(saved);
-} else if (browserLang.startsWith('es')) {
-  setLang('es');
-} else {
-  // Body stays EN, but headline uses detected language (any of 30)
-  setHeadline(browserLang);
-}
+const initialLang = saved || navigator.language || 'en';
+setLang(initialLang);
 </script>
 
 </body>
